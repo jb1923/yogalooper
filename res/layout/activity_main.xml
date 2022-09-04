@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    android:orientation="vertical"
+    <!-- setup button and EditTexts to change timer values  -->
+    <Button
+        android:id="@+id/setupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:onClick="onClickSetup"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:text="setup"/>
+
+    <TextView
+        android:id="@+id/labelPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="80dp"
+        android:text="loop pause:-  "
+        android:textColor="#FFF"
+         />
+
+
+    <EditText
+        android:id="@+id/editPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="70dp"
+        android:layout_toRightOf="@+id/labelPause"
+        android:clickable="true"
+        android:inputType="number"
+        android:textColor="#fff"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/labelLoop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelPause"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:text="loop 1:-  "
+        android:textColor="#FFF"
+         />
+    <EditText
+        android:id="@+id/editLoop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelPause"
+        android:layout_toRightOf="@+id/labelLoop1"
+        android:clickable="true"
+        android:inputType="number"
+        android:text="45"
+        android:textColor="#fff"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/labelLoop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelLoop1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:text="loop 2:-  "
+        android:textColor="#FFF"
+         />
+    <EditText
+        android:id="@+id/editLoop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelLoop1"
+        android:layout_toRightOf="@+id/labelLoop2"
+        android:clickable="true"
+        android:inputType="number"
+        android:text="60"
+        android:textColor="#fff"
+        android:maxLines="1" />
+    <!-- END OF setup button and EditText to change timer values  -->
+<!-- loop timer display AND BUTTONS    -->
+    <TextView
+        android:id="@+id/t1View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="160sp" />
+   <Button
+        android:id="@+id/loop1Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t1View"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:onClick="onClickLoop1"
+        android:text="Loop 45"
+   />
+     <Button
+        android:id="@+id/loop2Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_below="@+id/t1View"
+        android:layout_alignParentRight="true"
+         android:layout_marginRight="10dp"
+         android:layout_marginTop="5dp"
+        android:onClick="onClickLoop2"
+        android:text="Loop 60"
+     />
+    <!-- relaxation timer display and buttons at bottom of screen -->
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startT2Button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClickStop"
+        android:text="stop"
+    />
+
+    <Button
+        android:id="@+id/startT2Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:onClick="onClickStartT2"
+        android:text="start" />
+
+    <TextView
+        android:id="@+id/t2View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="45sp"
+         />
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="onClickClear"
+        android:text="clear" />
+    <!-- END OF relaxation timer display and buttons at bottom of screen -->
+</RelativeLayout>
