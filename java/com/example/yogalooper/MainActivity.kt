@@ -25,12 +25,14 @@ class MainActivity : Activity() {
     private var relaxationTimer = 0 // seconds counter for t2View relaxation timer
     private var loop1  = 0// loop1 time = 45"
     private var loop2  = 0// loop2 time = 60"
+    private var loop3  = 10// loop2 time = 600"
     private var loop0 = loop1 // loop0 =loop time in seconds ie loop1 or loop2 ie 45" or 60"
     private var runningT1 = false
     private var runningT2 = false
     private var setupButton: Button? = null
     private var loop1Button: Button? = null
     private var loop2Button: Button? = null
+    private var loop3Button: Button? = null
     private var stopButton: Button? = null
     private var startT2Button: Button? = null
     private var clearButton: Button? = null
@@ -59,6 +61,7 @@ class MainActivity : Activity() {
         setupButton = findViewById<View>(R.id.setupButton) as Button
         loop1Button = findViewById<View>(R.id.loop1Button) as Button
         loop2Button = findViewById<View>(R.id.loop2Button) as Button
+        loop3Button = findViewById<View>(R.id.loop3Button) as Button
         stopButton = findViewById<View>(R.id.stopButton) as Button
         startT2Button = findViewById<View>(R.id.startT2Button) as Button
         clearButton = findViewById<View>(R.id.clearButton) as Button
@@ -67,6 +70,7 @@ class MainActivity : Activity() {
         loadData()// load loop1,loop2, pauseDelay from previous run
         loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
         loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
+        loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
 
         labelPause = findViewById<View>(R.id.labelPause) as TextView
         labelLoop1 = findViewById<View>(R.id.labelLoop1) as TextView
@@ -84,7 +88,7 @@ class MainActivity : Activity() {
 
         running_loopTimer()
 
-    }
+    } // end of onCreate(savedInstanceState: Bundle
 
     private fun running_loopTimer() {
         val handle1 = Handler(Looper.getMainLooper())
@@ -137,7 +141,7 @@ class MainActivity : Activity() {
                 handle1.postDelayed(this, 1000) // 1" time delay
             } //= end of public void run
         }) // end of handle1.post(new Runnable() should be  });//
-    } //  end of loop timer
+    } //  end of running_loop timer
 
     fun GetInt(edTxt: EditText, default1: Int): Int {
         // gets integer from EditText - if no valid int, returns default1
@@ -156,6 +160,7 @@ class MainActivity : Activity() {
         val editor = sharedPref.edit()
         editor.putInt("loop1", loop1) // save integer loop1 for next session
         editor.putInt("loop2", loop2) // save integer loop2 for next session
+        editor.putInt("loop3", loop3) // save integer loop3 for next session
         editor.putInt("pauseDelay", pauseDelay) // save pauseDelay for next session
         editor.commit()
         editor.apply()
@@ -167,6 +172,7 @@ class MainActivity : Activity() {
         val editor = sharedPref.edit()
         loop1 = sharedPref.getInt("loop1", 45) // get loop1 from previous session
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
+        loop3 = sharedPref.getInt("loop3", 15) // get loop2 from previous session
         pauseDelay = sharedPref.getInt("pauseDelay", 7) //get pauseDelay from previous session
         loopTimer = -pauseDelay
     }
@@ -178,6 +184,7 @@ class MainActivity : Activity() {
             loopTimer = -pauseDelay // need -ive number for countdown
             loop1 = GetInt(editLoop1!!,45) // CustomEditText.GetInt
             loop2 =GetInt( editLoop2!!,60) // CustomEditText.GetInt
+            loop3 =GetInt( editLoop2!!,60) // CustomEditText.GetInt
             //     loop0 = loop1;
             saveData()
             // Close keyboard
@@ -193,11 +200,13 @@ class MainActivity : Activity() {
             setupButton!!.text = "setup " //set the text on button
             loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
             loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
+            loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
             t1View!!.visibility = View.VISIBLE
         } else { // setup button has been clicked:- change button label to SAVE, open edit texts
             setupButton!!.text = "Save  " //set the text on button
             SetInt(editLoop1!!,loop1) // SetInt (editText, integer value to set)
             SetInt(editLoop2!!,loop2) // CustomEditText.SetInt
+            SetInt(editLoop2!!,loop3) // CustomEditText.SetInt
             SetInt(editPause!!,pauseDelay) // CustomEditText.SetInt
             t1View!!.visibility = View.INVISIBLE
             labelPause!!.visibility = View.VISIBLE
@@ -218,20 +227,32 @@ class MainActivity : Activity() {
         runningT2 = true
         loop0 = loop1
         loopTimer = -pauseDelay
+        loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         loop1Button?.setBackgroundColor(buttonOnColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
     }
 
     fun onClickLoop2(view: View?) {
-        //Button loop2Button = (Button) findViewById(R.id.loop2Button);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         runningT1 = true
         runningT2 = true
         loop0 = loop2
         loopTimer = -pauseDelay
         loop1Button?.setBackgroundColor(buttonOffColor)
+        loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOnColor)
+        startT2Button!!.setBackgroundColor(buttonOffColor)
+    }
+    fun onClickLoop3(view: View?) {
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+        runningT1 = true
+        runningT2 = true
+        loop0 = loop3
+        loopTimer = -pauseDelay
+        loop1Button?.setBackgroundColor(buttonOffColor)
+        loop3Button?.setBackgroundColor(buttonOnColor)
+        loop2Button?.setBackgroundColor(buttonOffColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
     }
 
@@ -243,6 +264,7 @@ class MainActivity : Activity() {
         startT2Button!!.setBackgroundColor(buttonOnColor)
         loop1Button!!.setBackgroundColor(buttonOffColor)
         loop2Button!!.setBackgroundColor(buttonOffColor)
+        loop3Button!!.setBackgroundColor(buttonOffColor)
     }
 
     fun onClickStop(view: View?) {
@@ -252,6 +274,7 @@ class MainActivity : Activity() {
         startT2Button!!.setBackgroundColor(buttonOffColor)
         loop1Button!!.setBackgroundColor(buttonOffColor)
         loop2Button!!.setBackgroundColor(buttonOffColor)
+        loop3Button!!.setBackgroundColor(buttonOffColor)
     }
 
     fun onClickClear(view: View?) {

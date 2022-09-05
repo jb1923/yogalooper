@@ -85,8 +85,9 @@
         android:text="60"
         android:textColor="#fff"
         android:maxLines="1" />
-    <!-- END OF setup button and EditText to change timer values  -->
-<!-- loop timer display AND BUTTONS    -->
+<!-- END OF setup button and EditText to change timer values  -->
+
+    <!-- loop timer display AND BUTTONS    -->
     <TextView
         android:id="@+id/t1View"
         android:layout_width="wrap_content"
@@ -106,17 +107,27 @@
         android:onClick="onClickLoop1"
         android:text="Loop 45"
    />
-     <Button
+    <Button
         android:id="@+id/loop2Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:layout_below="@+id/t1View"
+        android:layout_below="@+id/t1View"
         android:layout_alignParentRight="true"
-         android:layout_marginRight="10dp"
-         android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:onClick="onClickLoop2"
         android:text="Loop 60"
-     />
+        />
+    <Button
+        android:id="@+id/loop3Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t1View"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:onClick="onClickLoop3"
+        android:text="Loop 60"
+        />
     <!-- relaxation timer display and buttons at bottom of screen -->
     <Button
         android:id="@+id/stopButton"
