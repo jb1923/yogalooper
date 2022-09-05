@@ -39,6 +39,7 @@ class MainActivity : Activity() {
     private var labelPause: TextView? = null
     private var labelLoop1: TextView? = null
     private var labelLoop2: TextView? = null
+    private var labelLoop3: TextView? = null
 
     val colWhite = -0x1
     val buttonOffColor = colWhite
@@ -51,6 +52,7 @@ class MainActivity : Activity() {
     private var editPause: EditText? = null
     private var editLoop1: EditText? = null
     private var editLoop2: EditText? = null
+    private var editLoop3: EditText? = null
 
     private  val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +69,7 @@ class MainActivity : Activity() {
         clearButton = findViewById<View>(R.id.clearButton) as Button
         t1View = findViewById(R.id.t1View) as TextView
         t2View = findViewById(R.id.t2View) as TextView
-        loadData()// load loop1,loop2, pauseDelay from previous run
+        loadData()// load loop1,loop2, loop3 pauseDelay from previous run
         loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
         loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
         loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
@@ -75,9 +77,11 @@ class MainActivity : Activity() {
         labelPause = findViewById<View>(R.id.labelPause) as TextView
         labelLoop1 = findViewById<View>(R.id.labelLoop1) as TextView
         labelLoop2 = findViewById<View>(R.id.labelLoop2) as TextView
+        labelLoop3 = findViewById<View>(R.id.labelLoop3) as TextView
         editPause = findViewById(R.id.editPause) as EditText
         editLoop1 = findViewById(R.id.editLoop1) as EditText
         editLoop2 = findViewById(R.id.editLoop2) as EditText
+        editLoop3 = findViewById(R.id.editLoop3) as EditText
         // hide setup menu
         editPause!!.visibility = View.INVISIBLE
         labelPause!!.visibility = View.INVISIBLE
@@ -172,7 +176,7 @@ class MainActivity : Activity() {
         val editor = sharedPref.edit()
         loop1 = sharedPref.getInt("loop1", 45) // get loop1 from previous session
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
-        loop3 = sharedPref.getInt("loop3", 15) // get loop2 from previous session
+        loop3 = sharedPref.getInt("loop3", 15) // get loop3 from previous session
         pauseDelay = sharedPref.getInt("pauseDelay", 7) //get pauseDelay from previous session
         loopTimer = -pauseDelay
     }
@@ -183,8 +187,8 @@ class MainActivity : Activity() {
             pauseDelay = GetInt(editPause!!,7) // CustomEditText.GetInt
             loopTimer = -pauseDelay // need -ive number for countdown
             loop1 = GetInt(editLoop1!!,45) // CustomEditText.GetInt
-            loop2 =GetInt( editLoop2!!,60) // CustomEditText.GetInt
-            loop3 =GetInt( editLoop2!!,60) // CustomEditText.GetInt
+            loop2 = GetInt( editLoop2!!,60) // CustomEditText.GetInt
+            loop3 = GetInt( editLoop3!!,10) // CustomEditText.GetInt
             //     loop0 = loop1;
             saveData()
             // Close keyboard
@@ -197,6 +201,11 @@ class MainActivity : Activity() {
             labelLoop1!!.visibility = View.INVISIBLE
             editLoop2!!.visibility = View.INVISIBLE
             labelLoop2!!.visibility = View.INVISIBLE
+            editLoop3!!.visibility = View.INVISIBLE
+            labelLoop3!!.visibility = View.INVISIBLE
+            loop1Button!!.visibility = View.VISIBLE
+            loop2Button!!.visibility = View.VISIBLE
+            loop3Button!!.visibility = View.VISIBLE
             setupButton!!.text = "setup " //set the text on button
             loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
             loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
@@ -206,7 +215,7 @@ class MainActivity : Activity() {
             setupButton!!.text = "Save  " //set the text on button
             SetInt(editLoop1!!,loop1) // SetInt (editText, integer value to set)
             SetInt(editLoop2!!,loop2) // CustomEditText.SetInt
-            SetInt(editLoop2!!,loop3) // CustomEditText.SetInt
+            SetInt(editLoop3!!,loop3) // CustomEditText.SetInt
             SetInt(editPause!!,pauseDelay) // CustomEditText.SetInt
             t1View!!.visibility = View.INVISIBLE
             labelPause!!.visibility = View.VISIBLE
@@ -215,6 +224,11 @@ class MainActivity : Activity() {
             labelLoop1!!.visibility = View.VISIBLE
             editLoop2!!.visibility = View.VISIBLE
             labelLoop2!!.visibility = View.VISIBLE
+            editLoop3!!.visibility = View.VISIBLE
+            labelLoop3!!.visibility = View.VISIBLE
+            loop1Button!!.visibility = View.INVISIBLE
+            loop2Button!!.visibility = View.INVISIBLE
+            loop3Button!!.visibility = View.INVISIBLE
             // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(editPause, InputMethodManager.SHOW_FORCED)
             editPause!!.setSelection(editPause!!.text.length)

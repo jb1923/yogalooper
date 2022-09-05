@@ -17,7 +17,7 @@
         android:background="@android:color/black"
         android:textColor="@android:color/white"
         android:text="setup"/>
-
+<!-- setup menu pauseDelay  -->
     <TextView
         android:id="@+id/labelPause"
         android:layout_width="wrap_content"
@@ -28,8 +28,6 @@
         android:text="loop pause:-  "
         android:textColor="#FFF"
          />
-
-
     <EditText
         android:id="@+id/editPause"
         android:layout_width="wrap_content"
@@ -41,7 +39,7 @@
         android:inputType="number"
         android:textColor="#fff"
         android:maxLines="1" />
-
+<!-- setup menu loop1  -->
     <TextView
         android:id="@+id/labelLoop1"
         android:layout_width="wrap_content"
@@ -63,7 +61,7 @@
         android:text="45"
         android:textColor="#fff"
         android:maxLines="1" />
-
+<!-- setup menu loop2  -->
     <TextView
         android:id="@+id/labelLoop2"
         android:layout_width="wrap_content"
@@ -85,7 +83,30 @@
         android:text="60"
         android:textColor="#fff"
         android:maxLines="1" />
-<!-- END OF setup button and EditText to change timer values  -->
+    <!-- setup menu loop3  -->
+    <TextView
+        android:id="@+id/labelLoop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelLoop2"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:text="loop 3:-  "
+        android:textColor="#FFF"
+        />
+    <EditText
+        android:id="@+id/editLoop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelLoop2"
+        android:layout_toRightOf="@+id/labelLoop3"
+        android:clickable="true"
+        android:inputType="number"
+        android:text="600"
+        android:textColor="#fff"
+        android:maxLines="1" />
+
+    <!-- END OF setup button and EditText to change timer values  -->
 
     <!-- loop timer display AND BUTTONS    -->
     <TextView
