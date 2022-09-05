@@ -21,7 +21,7 @@ import android.widget.EditText
 
 class MainActivity : Activity() {
    private var pauseDelay  = 0// pause between loops
-    private var loopTimer  = -pauseDelay // seconds counter for loop timer in t1View?
+    private var counter  = -pauseDelay // seconds counter for loop timer in t1View?
     private var relaxationTimer = 0 // seconds counter for t2View relaxation timer
     private var loop1  = 0// loop1 time = 45"
     private var loop2  = 0// loop2 time = 60"
@@ -100,9 +100,9 @@ class MainActivity : Activity() {
 //            val t1View?: TextView = findViewById(R.id.t1View?)
 //            var t2View: TextView = findViewById(R.id.t2View)
             override fun run() {
-                // update loopTimer on screen loop0 = 45 or 60 loop
-                var secs = loopTimer % 60
-                var mins = loopTimer / 60
+                // update counter on screen loop0 = 45 or 60 loop
+                var secs = counter % 60
+                var mins = counter / 60
                 val hrs: Int
                 val time_t1: String
                 if (loop0 > 600) {
@@ -117,14 +117,14 @@ class MainActivity : Activity() {
                 }
                 t1View?.text = time_t1
                 if (runningT1) {   // set timer1 red for pauseDelay -7" then white for loop 45"
-                    t1View?.setTextColor(if (loopTimer < 0) pauseColor else colWhite)
-                    if (loopTimer == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+                    t1View?.setTextColor(if (counter < 0) pauseColor else colWhite)
+                    if (counter == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
                     // When we reach loop count set timer to count down for pauseDelay seconds
-                    if (loopTimer == loop0) { // reached end of loop ie. 45"
-                        loopTimer = -pauseDelay // timer reset to -7" pauseDelay
+                    if (counter == loop0) { // reached end of loop ie. 45"
+                        counter = -pauseDelay // timer reset to -7" pauseDelay
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
                     }
-                    loopTimer++ // update loopTimer if not stopped
+                    counter++ // update counter if not stopped
                 } else { // if runningT1 = false. T1 stopped
                     t1View?.text = "**"
                 } // end of if (runningT1)
@@ -140,7 +140,7 @@ class MainActivity : Activity() {
                     t2View?.setTextColor(if (relaxationTimer < 0) pauseColor else colWhite)
                     //  if t1 is stopped, then every 600" beep
                     if (runningT1 == false && relaxationTimer % 600 == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
-                    relaxationTimer++ // update loopTimer as T});2 running
+                    relaxationTimer++ // update counter as T});2 running
                 } // end of if (runningT2)
                 handle1.postDelayed(this, 1000) // 1" time delay
             } //= end of public void run
@@ -210,13 +210,13 @@ class MainActivity : Activity() {
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
         loop3 = sharedPref.getInt("loop3", 15) // get loop3 from previous session
         pauseDelay = sharedPref.getInt("pauseDelay", 7) //get pauseDelay from previous session
-        loopTimer = -pauseDelay
+        counter = -pauseDelay
     }
 
     fun onClickSetup(view: View?) {
         if (editLoop1!!.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
             pauseDelay = GetInt(editPause!!,7) // CustomEditText.GetInt
-            loopTimer = -pauseDelay // need -ive number for countdown
+            counter = -pauseDelay // need -ive number for countdown
             loop1 = GetInt(editLoop1!!,45) // CustomEditText.GetInt
             loop2 = GetInt( editLoop2!!,60) // CustomEditText.GetInt
             loop3 = GetInt( editLoop3!!,10) // CustomEditText.GetInt
@@ -248,7 +248,7 @@ class MainActivity : Activity() {
         runningT1 = true
         runningT2 = true
         loop0 = loop1
-        loopTimer = -pauseDelay
+        counter = -pauseDelay
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         loop1Button?.setBackgroundColor(buttonOnColor)
@@ -260,7 +260,7 @@ class MainActivity : Activity() {
         runningT1 = true
         runningT2 = true
         loop0 = loop2
-        loopTimer = -pauseDelay
+        counter = -pauseDelay
         loop1Button?.setBackgroundColor(buttonOffColor)
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOnColor)
@@ -271,7 +271,7 @@ class MainActivity : Activity() {
         runningT1 = true
         runningT2 = true
         loop0 = loop3
-        loopTimer = -pauseDelay
+        counter = -pauseDelay
         loop1Button?.setBackgroundColor(buttonOffColor)
         loop3Button?.setBackgroundColor(buttonOnColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
@@ -282,7 +282,7 @@ class MainActivity : Activity() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         runningT1 = false
         runningT2 = true
-        loopTimer = 0
+        counter = 0
         startT2Button!!.setBackgroundColor(buttonOnColor)
         loop1Button!!.setBackgroundColor(buttonOffColor)
         loop2Button!!.setBackgroundColor(buttonOffColor)
@@ -301,7 +301,7 @@ class MainActivity : Activity() {
 
     fun onClickClear(view: View?) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
-        loopTimer = 0
+        counter = 0
         relaxationTimer = -pauseDelay
         t2View?.setTextColor(pauseColor)
     }
