@@ -89,7 +89,7 @@ class MainActivity : Activity() {
         labelLoop1!!.visibility = View.INVISIBLE
         editLoop2!!.visibility = View.INVISIBLE
         labelLoop2!!.visibility = View.INVISIBLE
-
+        toggleSetupMenuVisibility( false)
         running_loopTimer()
 
     } // end of onCreate(savedInstanceState: Bundle
@@ -158,6 +158,38 @@ class MainActivity : Activity() {
     fun SetInt(edTxt : EditText, value: Int) { //displays  integer value in EditText
         edTxt.setText(" " + Integer.toString(value) + " ") // add spaces for easy selectin
     }
+
+    fun toggleSetupMenuVisibility( OnOff: Boolean) {
+        if (OnOff == true) { // setup button clicked, so turn on setup menu stuff
+            t1View!!.visibility = View.INVISIBLE
+            loop1Button!!.visibility = View.INVISIBLE
+            loop2Button!!.visibility = View.INVISIBLE
+            loop3Button!!.visibility = View.INVISIBLE
+            labelPause!!.visibility = View.VISIBLE
+            editPause!!.visibility = View.VISIBLE
+            editLoop1!!.visibility = View.VISIBLE
+            labelLoop1!!.visibility = View.VISIBLE
+            editLoop2!!.visibility = View.VISIBLE
+            labelLoop2!!.visibility = View.VISIBLE
+            editLoop3!!.visibility = View.VISIBLE
+            labelLoop3!!.visibility = View.VISIBLE
+        } else {// normal,so turn on loop buttons and tiView
+            editPause!!.visibility = View.INVISIBLE
+            labelPause!!.visibility = View.INVISIBLE
+            editLoop1!!.visibility = View.INVISIBLE
+            labelLoop1!!.visibility = View.INVISIBLE
+            editLoop2!!.visibility = View.INVISIBLE
+            labelLoop2!!.visibility = View.INVISIBLE
+            editLoop3!!.visibility = View.INVISIBLE
+            labelLoop3!!.visibility = View.INVISIBLE
+            loop1Button!!.visibility = View.VISIBLE
+            loop2Button!!.visibility = View.VISIBLE
+            loop3Button!!.visibility = View.VISIBLE
+            t1View!!.visibility = View.VISIBLE
+        }
+    }
+
+
     fun saveData() {
         // save set up values for next session
         val sharedPref = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE)
@@ -181,7 +213,6 @@ class MainActivity : Activity() {
         loopTimer = -pauseDelay
     }
 
-
     fun onClickSetup(view: View?) {
         if (editLoop1!!.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
             pauseDelay = GetInt(editPause!!,7) // CustomEditText.GetInt
@@ -193,19 +224,7 @@ class MainActivity : Activity() {
             saveData()
             // Close keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(editPause!!.windowToken, 0)
-
-            //editPause.setImeOptions(EditorInfo.IME_ACTION_DONE);
-            editPause!!.visibility = View.INVISIBLE
-            labelPause!!.visibility = View.INVISIBLE
-            editLoop1!!.visibility = View.INVISIBLE
-            labelLoop1!!.visibility = View.INVISIBLE
-            editLoop2!!.visibility = View.INVISIBLE
-            labelLoop2!!.visibility = View.INVISIBLE
-            editLoop3!!.visibility = View.INVISIBLE
-            labelLoop3!!.visibility = View.INVISIBLE
-            loop1Button!!.visibility = View.VISIBLE
-            loop2Button!!.visibility = View.VISIBLE
-            loop3Button!!.visibility = View.VISIBLE
+            toggleSetupMenuVisibility( false)
             setupButton!!.text = "setup " //set the text on button
             loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
             loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
@@ -217,19 +236,8 @@ class MainActivity : Activity() {
             SetInt(editLoop2!!,loop2) // CustomEditText.SetInt
             SetInt(editLoop3!!,loop3) // CustomEditText.SetInt
             SetInt(editPause!!,pauseDelay) // CustomEditText.SetInt
-            t1View!!.visibility = View.INVISIBLE
-            labelPause!!.visibility = View.VISIBLE
-            editPause!!.visibility = View.VISIBLE
-            editLoop1!!.visibility = View.VISIBLE
-            labelLoop1!!.visibility = View.VISIBLE
-            editLoop2!!.visibility = View.VISIBLE
-            labelLoop2!!.visibility = View.VISIBLE
-            editLoop3!!.visibility = View.VISIBLE
-            labelLoop3!!.visibility = View.VISIBLE
-            loop1Button!!.visibility = View.INVISIBLE
-            loop2Button!!.visibility = View.INVISIBLE
-            loop3Button!!.visibility = View.INVISIBLE
-            // Open keyboard
+            toggleSetupMenuVisibility( true)
+             // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(editPause, InputMethodManager.SHOW_FORCED)
             editPause!!.setSelection(editPause!!.text.length)
         }
