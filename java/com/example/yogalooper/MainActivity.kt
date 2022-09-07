@@ -115,7 +115,7 @@ class MainActivity : Activity() {
                     if (t1Counter == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
                     // When we reach loop count set timer to count down for pauseDelay seconds
                     if (t1Counter == loop0) { // reached end of loop ie. 45"
-                        t1Counter = -pauseDelay-1 // timer reset to -7" pauseDelay
+                        t1Counter = -pauseDelay // timer reset to -7" pauseDelay
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
                     }
                     t1Counter++ // update t1Counter if not stopped
@@ -204,13 +204,13 @@ class MainActivity : Activity() {
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
         loop3 = sharedPref.getInt("loop3", 15) // get loop3 from previous session
         pauseDelay = sharedPref.getInt("pauseDelay", 7) //get pauseDelay from previous session
-        t1Counter = -pauseDelay-1
+        t1Counter = -pauseDelay
     }
 
     fun onClickSetup(view: View?) {
         if (editLoop1!!.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
             pauseDelay = GetInt(editPause!!,7) // CustomEditText.GetInt
-            t1Counter = -pauseDelay-1 // need -ive number for countdown
+            t1Counter = -pauseDelay // need -ive number for countdown
             loop1 = GetInt(editLoop1!!,45) // CustomEditText.GetInt
             loop2 = GetInt( editLoop2!!,60) // CustomEditText.GetInt
             loop3 = GetInt( editLoop3!!,10) // CustomEditText.GetInt
@@ -242,7 +242,7 @@ class MainActivity : Activity() {
         t1Running = true
         t2Running = true
         loop0 = loop1
-        t1Counter = -pauseDelay-1
+        t1Counter = -pauseDelay
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         loop1Button?.setBackgroundColor(buttonOnColor)
@@ -254,7 +254,7 @@ class MainActivity : Activity() {
         t1Running = true
         t2Running = true
         loop0 = loop2
-        t1Counter = -pauseDelay-1
+        t1Counter = -pauseDelay
         loop1Button?.setBackgroundColor(buttonOffColor)
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOnColor)
@@ -265,7 +265,7 @@ class MainActivity : Activity() {
         t1Running = true
         t2Running = true
         loop0 = loop3
-        t1Counter = -pauseDelay-1
+        t1Counter = -pauseDelay
         loop1Button?.setBackgroundColor(buttonOffColor)
         loop3Button?.setBackgroundColor(buttonOnColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
