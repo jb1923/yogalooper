@@ -199,7 +199,7 @@ class MainActivity : Activity() {
     fun loadData() {
         // save set up values between sessions
         val sharedPref = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE)
-        val editor = sharedPref.edit()
+     //   val editor = sharedPref.edit()
         loop1 = sharedPref.getInt("loop1", 45) // get loop1 from previous session
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
         loop3 = sharedPref.getInt("loop3", 15) // get loop3 from previous session
@@ -207,7 +207,7 @@ class MainActivity : Activity() {
         t1Counter = -pauseCount
     }
 
-    fun onClickSetup(view: View?) {
+    fun onClickSetup(view: View) {
         if (editLoop1!!.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
             pauseCount = GetInt(editPause!!,7) // CustomEditText.GetInt
             t1Counter = -pauseCount // need -ive number for countdown
@@ -237,7 +237,7 @@ class MainActivity : Activity() {
         }
     }
 
-    fun onClickLoop1(view: View?) {
+    fun onClickLoop1(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = true
         t2Running = true
@@ -249,7 +249,7 @@ class MainActivity : Activity() {
         startT2Button!!.setBackgroundColor(buttonOffColor)
     }
 
-    fun onClickLoop2(view: View?) {
+    fun onClickLoop2(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = true
         t2Running = true
@@ -260,7 +260,7 @@ class MainActivity : Activity() {
         loop2Button?.setBackgroundColor(buttonOnColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
     }
-    fun onClickLoop3(view: View?) {
+    fun onClickLoop3(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = true
         t2Running = true
@@ -272,7 +272,7 @@ class MainActivity : Activity() {
         startT2Button!!.setBackgroundColor(buttonOffColor)
     }
 
-    fun onClickStartT2(view: View?) {
+    fun onClickStartT2(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Running = false
         t2Running = true
@@ -283,7 +283,7 @@ class MainActivity : Activity() {
         loop3Button!!.setBackgroundColor(buttonOffColor)
     }
 
-    fun onClickStop(view: View?) {
+    fun onClickStop(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Running = false
         t2Running = false
@@ -293,7 +293,7 @@ class MainActivity : Activity() {
         loop3Button!!.setBackgroundColor(buttonOffColor)
     }
 
-    fun onClickClear(view: View?) {
+    fun onClickClear(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Counter = 0
         t2Counter = 0
