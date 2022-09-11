@@ -99,27 +99,33 @@ class MainActivity : Activity() {
                 var mins = t1Counter / 60
                 val hrs: Int
                 val time_t1: String
-                if (loop0 > 599) {
-                    t1View?.textSize = 140f
-                    time_t1 = String.format(Locale.getDefault(), "%02d:%02d", mins, Math.abs(secs))
-                } else if (loop0 > 60) {
-                    t1View?.textSize = 160f
-                    time_t1 = String.format(Locale.getDefault(), "%01d:%02d", mins, Math.abs(secs))
-                } else {
-                    t1View?.textSize = 200f
-                    time_t1 = String.format(Locale.getDefault(), "%02d", Math.abs(secs))
-                }
+
+                when {
+                    loop0 > 599 -> { t1View?.textSize = 140f
+                        time_t1 = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
+                    }
+                    loop0 > 60 -> { t1View?.textSize = 160f
+                                time_t1 = String.format(Locale.getDefault(),"%01d:%02d", mins, Math.abs(secs))
+                    }
+                    else -> { t1View?.textSize = 200f
+                              time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(secs))
+                    }
+                } // end of when
+
                 t1View?.text = time_t1
                 if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
-                    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
-                    if (t1Counter == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
-                    // When we reach loop count set timer to count down for pauseCount seconds
-                    if (t1Counter == loop0) { // reached end of loop ie. 45"
-                        t1Counter = -pauseCount // timer reset to -7" pauseCount
+                //    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
+                    if (t1Counter == 0) {
+                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+                                t1View?.setTextColor(colWhite)
+                    }  // When we reach loop count set timer to count down for pauseCount seconds
+                    else if (t1Counter == loop0) { // reached end of loop ie. 45"
+                        t1Counter = -pauseCount // timer reset to -7" pauseCount and t1View=white
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+                        t1View?.setTextColor(pauseColor) // t1View=red
                     }
                     t1Counter++ // update t1Counter if not stopped
-                } else { // if t1Running = false. T1 stopped
+                } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
 
@@ -147,7 +153,7 @@ class MainActivity : Activity() {
         val edTxtStr : String  = edTxt.text.toString().replace("[^0-9]+".toRegex(), "")
         // if edTxtStr ="" return default1 else return user value as integer
         return if (edTxtStr == "") default1 else edTxtStr.toInt()
-    }
+     }
 
     fun SetInt(edTxt : EditText, value: Int) { //displays  integer value in EditText
         edTxt.setText(" " + Integer.toString(value) + " ") // add spaces for easy selectin
@@ -155,7 +161,7 @@ class MainActivity : Activity() {
 
     fun toggleSetupMenuVisibility( OnOff: Boolean) {
         if (OnOff == true) { // setup button clicked, so turn on setup menu stuff
-            t1View!!.visibility = View.INVISIBLE
+            t1View?.visibility = View.INVISIBLE
             loop1Button!!.visibility = View.INVISIBLE
             loop2Button!!.visibility = View.INVISIBLE
             loop3Button!!.visibility = View.INVISIBLE
@@ -202,7 +208,7 @@ class MainActivity : Activity() {
      //   val editor = sharedPref.edit()
         loop1 = sharedPref.getInt("loop1", 45) // get loop1 from previous session
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
-        loop3 = sharedPref.getInt("loop3", 15) // get loop3 from previous session
+        loop3 = sharedPref.getInt("loop3", 600) // get loop3 from previous session
         pauseCount = sharedPref.getInt("pauseCount", 7) //get pauseCount from previous session
         t1Counter = -pauseCount
     }
@@ -213,7 +219,7 @@ class MainActivity : Activity() {
             t1Counter = -pauseCount // need -ive number for countdown
             loop1 = GetInt(editLoop1!!,45) // CustomEditText.GetInt
             loop2 = GetInt( editLoop2!!,60) // CustomEditText.GetInt
-            loop3 = GetInt( editLoop3!!,10) // CustomEditText.GetInt
+            loop3 = GetInt( editLoop3!!,600) // CustomEditText.GetInt
             //     loop0 = loop1;
             saveData()
             // Close keyboard
@@ -246,7 +252,8 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         loop1Button?.setBackgroundColor(buttonOnColor)
-        startT2Button!!.setBackgroundColor(buttonOffColor)
+        startT2Button?.setBackgroundColor(buttonOffColor)
+        t1View?.setTextColor(pauseColor) // t1View=red
     }
 
     fun onClickLoop2(view: View) {
@@ -259,6 +266,7 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOnColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
+        t1View?.setTextColor(pauseColor) // t1View=red
     }
     fun onClickLoop3(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
@@ -270,6 +278,7 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOnColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
+        t1View?.setTextColor(pauseColor) // t1View=red
     }
 
     fun onClickStartT2(view: View) {
