@@ -94,6 +94,20 @@ class MainActivity : Activity() {
             override fun run() {
             // ###################  update t1Counter on screen loop0 = 45 or 60 loop ########################################
                   if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
+
+                      when {
+                          t1Counter < 0 -> t1View?.setTextColor(pauseColor)
+                          t1Counter == 0 -> {toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+                          t1View?.setTextColor(colWhite)}
+                          t1Counter == loop0 -> { // reached end of loop ie. 45"
+                              t1Counter = -pauseCount // timer reset to -7" pauseCount and t1View=white
+                              toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+
+                          }
+                      } // end of when
+
+
+/*
                     t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
                     if (t1Counter == 0) {
                          toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
@@ -102,7 +116,7 @@ class MainActivity : Activity() {
                         t1Counter = -pauseCount // timer reset to -7" pauseCount and t1View=white
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
                     }
-                    t1Counter++ // update t1Counter if not stopped
+*/                    t1Counter++ // update t1Counter if not stopped
                 } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
