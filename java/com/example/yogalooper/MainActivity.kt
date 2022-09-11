@@ -60,6 +60,7 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        loadData()// load loop1,loop2, loop3 pauseCount from previous run
         setupButton = findViewById<View>(R.id.setupButton) as Button
         loop1Button = findViewById<View>(R.id.loop1Button) as Button
         loop2Button = findViewById<View>(R.id.loop2Button) as Button
@@ -69,7 +70,6 @@ class MainActivity : Activity() {
         clearButton = findViewById<View>(R.id.clearButton) as Button
         t1View = findViewById(R.id.t1View) as TextView
         t2View = findViewById(R.id.t2View) as TextView
-        loadData()// load loop1,loop2, loop3 pauseCount from previous run
         loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
         loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
         loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
@@ -113,19 +113,19 @@ class MainActivity : Activity() {
                 } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
-    when {
-        loop0 > 599 -> { t1View?.textSize = 140f
-            time_t1 = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
-        }
-        loop0 > 60 -> { t1View?.textSize = 160f
-            time_t1 = String.format(Locale.getDefault(),"%01d:%02d", mins, Math.abs(secs))
-        }
-        else -> { t1View?.textSize = 200f
-            time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(secs))
-        }
-    } // end of when
+                when {
+                    loop0 > 599 -> { t1View?.textSize = 140f
+                        time_t1 = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
+                    }
+                    loop0 > 60 -> { t1View?.textSize = 160f
+                        time_t1 = String.format(Locale.getDefault(),"%01d:%02d", mins, Math.abs(secs))
+                    }
+                    else -> { t1View?.textSize = 200f
+                        time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(secs))
+                    }
+                } // end of when
 
-    t1View?.text = time_t1
+                t1View?.text = time_t1
 
                 // update t2Counter on screen
                 hrs = t2Counter / 3600
@@ -208,7 +208,6 @@ class MainActivity : Activity() {
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
         loop3 = sharedPref.getInt("loop3", 600) // get loop3 from previous session
         pauseCount = sharedPref.getInt("pauseCount", 7) //get pauseCount from previous session
-        t1Counter = -pauseCount
     }
 
     fun onClickSetup(view: View) {
@@ -227,7 +226,7 @@ class MainActivity : Activity() {
             loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
             loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
             loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
-            t1View!!.visibility = View.VISIBLE
+           // t1View!!.visibility = View.VISIBLE
         } else { // setup button has been clicked:- change button label to SAVE, open edit texts
             setupButton!!.text = "Save  " //set the text on button
             SetInt(editLoop1!!,loop1) // SetInt (editText, integer value to set)
