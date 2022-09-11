@@ -100,34 +100,32 @@ class MainActivity : Activity() {
                 val hrs: Int
                 val time_t1: String
 
-                when {
-                    loop0 > 599 -> { t1View?.textSize = 140f
-                        time_t1 = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
-                    }
-                    loop0 > 60 -> { t1View?.textSize = 160f
-                                time_t1 = String.format(Locale.getDefault(),"%01d:%02d", mins, Math.abs(secs))
-                    }
-                    else -> { t1View?.textSize = 200f
-                              time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(secs))
-                    }
-                } // end of when
-
-                t1View?.text = time_t1
-                if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
-                //    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
+                 if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
+                    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
                     if (t1Counter == 0) {
                          toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
-                                t1View?.setTextColor(colWhite)
                     }  // When we reach loop count set timer to count down for pauseCount seconds
                     else if (t1Counter == loop0) { // reached end of loop ie. 45"
                         t1Counter = -pauseCount // timer reset to -7" pauseCount and t1View=white
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
-                        t1View?.setTextColor(pauseColor) // t1View=red
                     }
                     t1Counter++ // update t1Counter if not stopped
                 } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
+    when {
+        loop0 > 599 -> { t1View?.textSize = 140f
+            time_t1 = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
+        }
+        loop0 > 60 -> { t1View?.textSize = 160f
+            time_t1 = String.format(Locale.getDefault(),"%01d:%02d", mins, Math.abs(secs))
+        }
+        else -> { t1View?.textSize = 200f
+            time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(secs))
+        }
+    } // end of when
+
+    t1View?.text = time_t1
 
                 // update t2Counter on screen
                 hrs = t2Counter / 3600
@@ -253,7 +251,6 @@ class MainActivity : Activity() {
         loop2Button?.setBackgroundColor(buttonOffColor)
         loop1Button?.setBackgroundColor(buttonOnColor)
         startT2Button?.setBackgroundColor(buttonOffColor)
-        t1View?.setTextColor(pauseColor) // t1View=red
     }
 
     fun onClickLoop2(view: View) {
@@ -266,7 +263,6 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOnColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
-        t1View?.setTextColor(pauseColor) // t1View=red
     }
     fun onClickLoop3(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
@@ -278,8 +274,7 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOnColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
-        t1View?.setTextColor(pauseColor) // t1View=red
-    }
+     }
 
     fun onClickStartT2(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
