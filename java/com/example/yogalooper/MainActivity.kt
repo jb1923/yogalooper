@@ -106,7 +106,7 @@ class MainActivity : Activity() {
                 } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
-                var  time_t1 =""
+                val time_t1: String
                 when {
                     loop0 > 599 -> time_t1 = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
                     loop0 > 60 -> time_t1 = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
