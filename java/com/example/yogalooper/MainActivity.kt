@@ -40,11 +40,6 @@ class MainActivity : Activity() {
     private var labelLoop1: TextView? = null
     private var labelLoop2: TextView? = null
     private var labelLoop3: TextView? = null
-    var secs = t1Counter % 60
-    var mins = t1Counter / 60
-    var hrs = t2Counter / 3600
-
-    var time_t1: String = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
 
     val colWhite = -0x1
     val buttonOffColor = colWhite
@@ -96,15 +91,9 @@ class MainActivity : Activity() {
     private fun runT1T2counters() {
         val handle1 = Handler(Looper.getMainLooper())
         handle1.post(object : Runnable {
-//            val t1View?: TextView = findViewById(R.id.t1View?)
-//            var t2View: TextView = findViewById(R.id.t2View)
             override fun run() {
-                // update t1Counter on screen loop0 = 45 or 60 loop
-                var secs = t1Counter % 60
-                var mins = t1Counter / 60
-                //val hrs: Int
-
-                 if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
+            // ###################  update t1Counter on screen loop0 = 45 or 60 loop ########################################
+                  if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
                     t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
                     if (t1Counter == 0) {
                          toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
@@ -117,19 +106,17 @@ class MainActivity : Activity() {
                 } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
+                var  time_t1 =""
                 when {
-                    loop0 > 599 -> time_t1 = String.format(Locale.getDefault(),"%02d:%02d", mins, Math.abs(secs))
-                    loop0 > 60 -> time_t1 = String.format(Locale.getDefault(),"%01d:%02d", mins, Math.abs(secs))
-                    else -> {time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(secs)) }
+                    loop0 > 599 -> time_t1 = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
+                    loop0 > 60 -> time_t1 = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
+                    else -> {time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(t1Counter)) }
                 } // end of when
                 t1View?.text = time_t1
 
-                // update t2Counter on screen
-             //   hrs = t2Counter / 3600
-                mins = t2Counter % 3600 / 60
-                secs = t2Counter % 60
-                val time_t2: String
-                time_t2 = String.format("%02d:%02d:%02d", hrs, mins, Math.abs(secs))
+                // ##############  update t2Counter on screen ###########################################################
+                 val time_t2: String
+                time_t2 = String.format("%02d:%02d:%02d",t2Counter/3600,  t2Counter%3600/60, Math.abs(t2Counter%60))
                 t2View?.text = time_t2
                 if (t2Running) {   // set timer2 red for pauseCount -7" then white
                     t2View?.setTextColor(if (t2Counter < 0) pauseColor else colWhite)
