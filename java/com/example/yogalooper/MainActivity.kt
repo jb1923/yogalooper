@@ -53,6 +53,7 @@ class MainActivity : Activity() {
     private var editLoop1: EditText? = null
     private var editLoop2: EditText? = null
     private var editLoop3: EditText? = null
+    var strFormat1 = "%02d"
 
     private  val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +86,6 @@ class MainActivity : Activity() {
         // hide setup menu
         toggleSetupMenuVisibility( false)
         runT1T2counters()
-
     } // end of onCreate(savedInstanceState: Bundle
 
     private fun runT1T2counters() {
@@ -124,7 +124,7 @@ class MainActivity : Activity() {
                 when {
                     loop0 > 599 -> time_t1 = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
                     loop0 > 60 -> time_t1 = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
-                    else -> {time_t1 = String.format(Locale.getDefault(),"%02d", Math.abs(t1Counter)) }
+                    else -> {time_t1 = String.format(Locale.getDefault(),strFormat1, Math.abs(t1Counter)) }
                 } // end of when
                 t1View?.text = time_t1
 
