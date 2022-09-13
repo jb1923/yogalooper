@@ -100,17 +100,17 @@ class MainActivity : Activity() {
                  } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
-                var time_t1: String
-                when { // change 
-                    loop0 > 599 -> { time_t1 = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
+                //var time_t1: String
+                t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
+                when { // change
+                    loop0 > 599 -> { t1View?.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
                                     t1View?.textSize = 140f }
-                    loop0 > 60 -> { time_t1 = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
+                    loop0 > 60 -> { t1View?.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
                                     t1View?.textSize = 160f }
-                    else       -> { time_t1 = String.format(Locale.getDefault(),"%02d",Math.abs(t1Counter%60))
+                    else       -> { t1View?.text = String.format(Locale.getDefault(),"%02d",Math.abs(t1Counter%60))
                                     t1View?.textSize = 200f }
                 } // end of when
-                t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
-                t1View?.text = time_t1
+               // t1View?.text = time_t1
                 t1Counter++ // update t1Counter if not stopped
                 // ##############  update t2Counter on screen ###########################################################
                  val time_t2: String
