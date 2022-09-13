@@ -1,11 +1,9 @@
 package com.example.yogalooper
 
 import android.os.Bundle
-//import android.os.yogalooper
 import android.view.View
 import android.widget.TextView
 import android.app.Activity
-import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Handler
 import android.view.inputmethod.InputMethodManager
@@ -14,7 +12,6 @@ import java.lang.Runnable
 import java.util.Locale
 import android.media.ToneGenerator
 import android.media.AudioManager
-//import android.util.AttributeSet
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
@@ -41,10 +38,10 @@ class MainActivity : Activity() {
     private var labelLoop2: TextView? = null
     private var labelLoop3: TextView? = null
 
-    val colWhite = -0x1
-    val buttonOffColor = colWhite
-    val buttonOnColor = -0x100
-    val pauseColor = -0x10000
+    val colWhite = Integer.decode("0xFFFFFF") - 16777216 //-0x1
+    val buttonOffColor = Integer.decode("0xAAAAAA") - 16777216
+    val buttonOnColor = Integer.decode("0xFFFF00") - 16777216 //-0x100
+    val pauseColor =  Integer.decode("0xFF0000") - 16777216// -0x10000
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
     var t1View: TextView? = null
@@ -97,8 +94,8 @@ class MainActivity : Activity() {
                         t1Counter == loop0 -> { t1Counter = -pauseCount // end of loop ie. 45" reset counter to -7
                                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150) }
                     } // end of when
-                    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
-                    when { // change
+                    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)// red text tiCounter < 0 whiteText >= 0
+                    when { // set textsize and format for t1view displaying ticoounter
                         loop0 > 599 -> { t1View?.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
                                            t1View?.textSize = 140f }
                         loop0 > 60 ->  { t1View?.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
@@ -230,6 +227,8 @@ class MainActivity : Activity() {
         loop2Button?.setBackgroundColor(buttonOffColor)
         loop1Button?.setBackgroundColor(buttonOnColor)
         startT2Button?.setBackgroundColor(buttonOffColor)
+        clearButton?.setBackgroundColor(buttonOffColor)
+        stopButton?.setBackgroundColor(buttonOffColor)
     }
 
     fun onClickLoop2(view: View) {
@@ -242,6 +241,8 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOffColor)
         loop2Button?.setBackgroundColor(buttonOnColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
+        clearButton?.setBackgroundColor(buttonOffColor)
+        stopButton?.setBackgroundColor(buttonOffColor)
   }
     fun onClickLoop3(view: View) {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
@@ -253,6 +254,8 @@ class MainActivity : Activity() {
         loop3Button?.setBackgroundColor(buttonOnColor)
         loop2Button?.setBackgroundColor(buttonOffColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
+        clearButton?.setBackgroundColor(buttonOffColor)
+        stopButton?.setBackgroundColor(buttonOffColor)
      }
 
     fun onClickStartT2(view: View) {
@@ -264,6 +267,8 @@ class MainActivity : Activity() {
         loop1Button!!.setBackgroundColor(buttonOffColor)
         loop2Button!!.setBackgroundColor(buttonOffColor)
         loop3Button!!.setBackgroundColor(buttonOffColor)
+        clearButton?.setBackgroundColor(buttonOffColor)
+        stopButton?.setBackgroundColor(buttonOffColor)
     }
 
     fun onClickStop(view: View) {
@@ -274,6 +279,8 @@ class MainActivity : Activity() {
         loop1Button!!.setBackgroundColor(buttonOffColor)
         loop2Button!!.setBackgroundColor(buttonOffColor)
         loop3Button!!.setBackgroundColor(buttonOffColor)
+        clearButton?.setBackgroundColor(buttonOffColor)
+        stopButton?.setBackgroundColor(buttonOnColor)
     }
 
     fun onClickClear(view: View) {
@@ -281,6 +288,12 @@ class MainActivity : Activity() {
         t1Counter = 0
         t2Counter = 0
         t2View?.setTextColor(pauseColor)
+        startT2Button!!.setBackgroundColor(buttonOffColor)
+        loop1Button!!.setBackgroundColor(buttonOffColor)
+        loop2Button!!.setBackgroundColor(buttonOffColor)
+        loop3Button!!.setBackgroundColor(buttonOffColor)
+        clearButton?.setBackgroundColor(buttonOnColor)
+        stopButton?.setBackgroundColor(buttonOffColor)
     }
 
     companion object {
