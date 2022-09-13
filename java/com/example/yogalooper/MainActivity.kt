@@ -97,21 +97,23 @@ class MainActivity : Activity() {
                           t1Counter == loop0 -> { t1Counter = -pauseCount // end of loop ie. 45" reset counter to -7
                                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150) }
                       } // end of when
-                 } else { // if  T1 stopped
-                    t1View?.text = "**"
-                } // end of if (t1Running)
-                //var time_t1: String
-                t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
-                when { // change
-                    loop0 > 599 -> { t1View?.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
-                                    t1View?.textSize = 140f }
-                    loop0 > 60 -> { t1View?.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
-                                    t1View?.textSize = 160f }
-                    else       -> { t1View?.text = String.format(Locale.getDefault(),"%02d",Math.abs(t1Counter%60))
-                                    t1View?.textSize = 200f }
-                } // end of when
-               // t1View?.text = time_t1
-                t1Counter++ // update t1Counter if not stopped
+
+
+                     //var time_t1: String
+                        t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)
+                        when { // change
+                            loop0 > 599 -> { t1View?.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
+                                            t1View?.textSize = 140f }
+                            loop0 > 60 -> { t1View?.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
+                                            t1View?.textSize = 160f }
+                            else       -> { t1View?.text = String.format(Locale.getDefault(),"%02d",Math.abs(t1Counter%60))
+                                            t1View?.textSize = 200f }
+                        } // end of when
+                        // t1View?.text = time_t1
+                        t1Counter++ // update t1Counter if not stopped
+                  } else { // if  T1 stopped
+                        t1View?.text = "**"
+                  } // end of if (t1Running)
                 // ##############  update t2Counter on screen ###########################################################
                  val time_t2: String
                 time_t2 = String.format("%02d:%02d:%02d",t2Counter/3600,  t2Counter%3600/60, Math.abs(t2Counter%60))
