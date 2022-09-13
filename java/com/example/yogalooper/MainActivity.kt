@@ -91,20 +91,17 @@ class MainActivity : Activity() {
         handle1.post(object : Runnable {
             override fun run() {
             // ###################  update t1Counter on screen loop0 = 45 or 60 loop ########################################
-                  if (t1Running) {   // set timer1 red for pauseCount -7" then white for loop 45"
-
+                  if (t1Running) {   // tone PIP at 0 and loop0 45"
                       when {
-                          t1Counter == 0 -> {toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
-                           }
+                          t1Counter ==     0 -> {toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)}
                           t1Counter == loop0 -> { t1Counter = -pauseCount // end of loop ie. 45" reset counter to -7
-                              toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
-                          }
+                                                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150) }
                       } // end of when
                  } else { // if  T1 stopped
                     t1View?.text = "**"
                 } // end of if (t1Running)
                 var time_t1: String
-                when {
+                when { // change 
                     loop0 > 599 -> { time_t1 = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
                                     t1View?.textSize = 140f }
                     loop0 > 60 -> { time_t1 = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
@@ -126,7 +123,7 @@ class MainActivity : Activity() {
                     t2Counter++ // update counter as  running
                 } // end of if (t2Running)
                 handle1.postDelayed(this, 1000) // 1" time delay
-            } //= end of public void run
+            } //= end of  override fun run
         }) // end of handle1.post(new Runnable() should be  });//
     } //  end of running_loop timer
 
@@ -221,7 +218,7 @@ class MainActivity : Activity() {
             toggleSetupMenuVisibility( true)
              // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(editPause, InputMethodManager.SHOW_FORCED)
-            editPause!!.setSelection(editPause!!.text.length)
+            //editPause!!.setSelection(editPause!!.text.length)
         }
     }
 
