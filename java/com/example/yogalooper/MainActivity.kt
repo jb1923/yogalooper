@@ -38,10 +38,12 @@ class MainActivity : Activity() {
     private var labelLoop2: TextView? = null
     private var labelLoop3: TextView? = null
 
+    // COLORS  go from -1 to - 16777216 white to black
     val colWhite = Integer.decode("0xFFFFFF") - 16777216 //-0x1
     val buttonOffColor = Integer.decode("0xAAAAAA") - 16777216
     val buttonOnColor = Integer.decode("0xFFFF00") - 16777216 //-0x100
     val pauseColor =  Integer.decode("0xFF0000") - 16777216// -0x10000
+
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
     var t1View: TextView? = null
@@ -108,12 +110,10 @@ class MainActivity : Activity() {
                       t1View?.text = "**"
                 } // end of if (t1Running)
                 // ##############  update t2Counter on screen ###########################################################
-                val time_t2: String
-                time_t2 = String.format("%02d:%02d:%02d",t2Counter/3600,  t2Counter%3600/60, Math.abs(t2Counter%60))
-                t2View?.text = time_t2
+                t2View?.text = String.format("%02d:%02d:%02d",t2Counter/3600,  t2Counter%3600/60, Math.abs(t2Counter%60))
                 if (t2Running) {   // set timer2 red for pauseCount -7" then white
-                    t2View?.setTextColor(if (t2Counter < 0) pauseColor else colWhite)
-                    //  if t1 is stopped, then every 600" beep
+                    //t2View?.setTextColor(if (t2Counter < 0) pauseColor else colWhite)
+                    //  if t1 is stopped, then beep every 600"
                     if (t1Running == false && t2Counter % 600 == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
                     t2Counter++ // update counter as  running
                 } // end of if (t2Running)
@@ -164,7 +164,6 @@ class MainActivity : Activity() {
         }
     }
 
-
     fun saveData() {
         // save set up values for next session
         val sharedPref = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE)
@@ -207,8 +206,8 @@ class MainActivity : Activity() {
         } else { // setup button has been clicked:- change button label to SAVE, open edit texts
             setupButton!!.text = "Save  " //set the text on button
             SetInt(editLoop1!!,loop1) // SetInt (editText, integer value to set)
-            SetInt(editLoop2!!,loop2) // CustomEditText.SetInt
-            SetInt(editLoop3!!,loop3) // CustomEditText.SetInt
+            SetInt(editLoop2!!,loop2)
+            SetInt(editLoop3!!,loop3) 
             SetInt(editPause!!,pauseCount) // CustomEditText.SetInt
             toggleSetupMenuVisibility( true)
              // Open keyboard
@@ -287,7 +286,7 @@ class MainActivity : Activity() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Counter = 0
         t2Counter = 0
-        t2View?.setTextColor(pauseColor)
+        t2View?.setTextColor(colWhite)
         startT2Button!!.setBackgroundColor(buttonOffColor)
         loop1Button!!.setBackgroundColor(buttonOffColor)
         loop2Button!!.setBackgroundColor(buttonOffColor)
