@@ -32,7 +32,7 @@ class MainActivity : Activity() {
     private var t2Running = false
     private var setupButton: Button? = null
  //   private var loop1Button: Button? = null
-    private var loop2Button: Button? = null
+ //   private var loop2Button: Button? = null
     private var loop3Button: Button? = null
     private var stopButton: Button? = null
     private var startT2Button: Button? = null
@@ -67,7 +67,7 @@ class MainActivity : Activity() {
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
         setupButton = findViewById<View>(R.id.setupButton) as Button
         //loop1Button = findViewById<View>(R.id..loop1Button) as Button
-        loop2Button = findViewById<View>(R.id.loop2Button) as Button
+        //loop2Button = findViewById<View>(R.id.loop2Button) as Button
         loop3Button = findViewById<View>(R.id.loop3Button) as Button
         stopButton = findViewById<View>(R.id.stopButton) as Button
         startT2Button = findViewById<View>(R.id.startT2Button) as Button
@@ -75,7 +75,7 @@ class MainActivity : Activity() {
         t1View = findViewById(R.id.t1View) as TextView
         t2View = findViewById(R.id.t2View) as TextView
         binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
-        loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
+        binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
         loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
 
         labelPause = findViewById<View>(R.id.labelPause) as TextView
@@ -144,7 +144,7 @@ class MainActivity : Activity() {
         if (OnOff == true) { // setup button clicked, so turn on setup menu stuff
             t1View?.visibility = View.INVISIBLE
             binding.loop1Button.visibility = View.INVISIBLE
-            loop2Button!!.visibility = View.INVISIBLE
+            binding.loop2Button.visibility = View.INVISIBLE
             loop3Button!!.visibility = View.INVISIBLE
             labelPause!!.visibility = View.VISIBLE
             editPause!!.visibility = View.VISIBLE
@@ -164,7 +164,7 @@ class MainActivity : Activity() {
             editLoop3!!.visibility = View.INVISIBLE
             labelLoop3!!.visibility = View.INVISIBLE
             binding.loop1Button.visibility = View.VISIBLE
-            loop2Button!!.visibility = View.VISIBLE
+            binding.loop2Button.visibility = View.VISIBLE
             loop3Button!!.visibility = View.VISIBLE
             t1View!!.visibility = View.VISIBLE
         }
@@ -206,7 +206,7 @@ class MainActivity : Activity() {
             toggleSetupMenuVisibility( false)
             setupButton!!.text = "setup " //set the text on button
             binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
-            loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
+            binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
             loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
            // t1View!!.visibility = View.VISIBLE
         } else { // setup button has been clicked:- change button label to SAVE, open edit texts
@@ -229,7 +229,7 @@ class MainActivity : Activity() {
         loop0 = loop1
         t1Counter = -pauseCount
         loop3Button?.setBackgroundColor(buttonOffColor)
-        loop2Button?.setBackgroundColor(buttonOffColor)
+        binding.loop2Button?.setBackgroundColor(buttonOffColor)
         binding.loop1Button?.setBackgroundColor(buttonOnColor)
         startT2Button?.setBackgroundColor(buttonOffColor)
         clearButton?.setBackgroundColor(buttonOffColor)
@@ -244,7 +244,7 @@ class MainActivity : Activity() {
         t1Counter = -pauseCount
         binding.loop1Button?.setBackgroundColor(buttonOffColor)
         loop3Button?.setBackgroundColor(buttonOffColor)
-        loop2Button?.setBackgroundColor(buttonOnColor)
+        binding.loop2Button?.setBackgroundColor(buttonOnColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
         clearButton?.setBackgroundColor(buttonOffColor)
         stopButton?.setBackgroundColor(buttonOffColor)
@@ -257,7 +257,7 @@ class MainActivity : Activity() {
         t1Counter = -pauseCount
         binding.loop1Button?.setBackgroundColor(buttonOffColor)
         loop3Button?.setBackgroundColor(buttonOnColor)
-        loop2Button?.setBackgroundColor(buttonOffColor)
+        binding.loop2Button?.setBackgroundColor(buttonOffColor)
         startT2Button!!.setBackgroundColor(buttonOffColor)
         clearButton?.setBackgroundColor(buttonOffColor)
         stopButton?.setBackgroundColor(buttonOffColor)
@@ -270,7 +270,7 @@ class MainActivity : Activity() {
         t1Counter = 0
         startT2Button!!.setBackgroundColor(buttonOnColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
-        loop2Button!!.setBackgroundColor(buttonOffColor)
+        binding.loop2Button.setBackgroundColor(buttonOffColor)
         loop3Button!!.setBackgroundColor(buttonOffColor)
         clearButton?.setBackgroundColor(buttonOffColor)
         stopButton?.setBackgroundColor(buttonOffColor)
@@ -282,7 +282,7 @@ class MainActivity : Activity() {
         t2Running = false
         startT2Button!!.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
-        loop2Button!!.setBackgroundColor(buttonOffColor)
+        binding.loop2Button.setBackgroundColor(buttonOffColor)
         loop3Button!!.setBackgroundColor(buttonOffColor)
         clearButton?.setBackgroundColor(buttonOffColor)
         stopButton?.setBackgroundColor(buttonOnColor)
@@ -295,7 +295,7 @@ class MainActivity : Activity() {
         t2View?.setTextColor(colWhite)
         startT2Button!!.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
-        loop2Button!!.setBackgroundColor(buttonOffColor)
+        binding.loop2Button.setBackgroundColor(buttonOffColor)
         loop3Button!!.setBackgroundColor(buttonOffColor)
         clearButton?.setBackgroundColor(buttonOnColor)
         stopButton?.setBackgroundColor(buttonOffColor)
