@@ -17,10 +17,8 @@ import android.widget.Button
 import android.widget.EditText
 import com.example.yogalooper.databinding.ActivityMainBinding
 
-//import dev.theimpulson.codepurviewbinding.databinding.ActivityMainBinding
-
 class MainActivity : Activity() {
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding // viewBinding
     private var pauseCount  = 0// pause between loops
     private var t1Counter  = 0 // seconds counter for loop timer in binding.t1View
     private var t2Counter = 0 // seconds counter for t2View relaxation timer
@@ -39,7 +37,7 @@ class MainActivity : Activity() {
 
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
-    private  val TAG = "MainActivity"
+//    private  val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,9 +46,6 @@ class MainActivity : Activity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
-        binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
-        binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
-        binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
 
        // hide setup menu
         toggleSetupMenuVisibility( false)
@@ -156,6 +151,10 @@ class MainActivity : Activity() {
         loop2 = sharedPref.getInt("loop2", 60) // get loop2 from previous session
         loop3 = sharedPref.getInt("loop3", 600) // get loop3 from previous session
         pauseCount = sharedPref.getInt("pauseCount", 7) //get pauseCount from previous session
+        binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
+        binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
+        binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
+
     }
 
     fun onClickSetup(view: View) {
