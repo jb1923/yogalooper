@@ -15,6 +15,7 @@ import android.media.AudioManager
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+//import dev.theimpulson.codepurviewbinding.databinding.ActivityMainBinding
 
 class MainActivity : Activity() {
    private var pauseCount  = 0// pause between loops
@@ -56,6 +57,9 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        lateinit var binding: ActivityMainBinding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
@@ -68,7 +72,7 @@ class MainActivity : Activity() {
         clearButton = findViewById<View>(R.id.clearButton) as Button
         t1View = findViewById(R.id.t1View) as TextView
         t2View = findViewById(R.id.t2View) as TextView
-        loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
+        binding.loop1Button!!.text = "loop " + Integer.toString(loop1) //set the text on button
         loop2Button!!.text = "loop " + Integer.toString(loop2) //set the text on button
         loop3Button!!.text = "loop " + Integer.toString(loop3) //set the text on button
 
