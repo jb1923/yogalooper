@@ -19,6 +19,7 @@ import com.example.yogalooper.databinding.ActivityMainBinding
 
 class MainActivity : Activity() {
     lateinit var binding: ActivityMainBinding // viewBinding
+// global variables used in lots of functions
     private var pauseCount  = 0// pause between loops
     private var t1Counter  = 0 // seconds counter for loop timer in binding.t1View
     private var t2Counter = 0 // seconds counter for t2View relaxation timer
@@ -30,14 +31,13 @@ class MainActivity : Activity() {
     private var t2Running = false
 
     // COLORS  go from -1 to - 16777216 white to black
-    val colWhite = Integer.decode("0xFFFFFF") - 16777216 //-0x1
+    val colWhite       = Integer.decode("0xFFFFFF") - 16777216 //-0x1
     val buttonOffColor = Integer.decode("0xAAAAAA") - 16777216
-    val buttonOnColor = Integer.decode("0xFFFF00") - 16777216 //-0x100
-    val pauseColor =  Integer.decode("0xFF0000") - 16777216// -0x10000
+    val buttonOnColor  = Integer.decode("0xFFFF00") - 16777216 //-0x100
+    val pauseColor     = Integer.decode("0xFF0000") - 16777216// -0x10000
 
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
-//    private  val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,7 +46,6 @@ class MainActivity : Activity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
-
        // hide setup menu
         toggleSetupMenuVisibility( false)
         runT1T2counters()
@@ -169,15 +168,15 @@ class MainActivity : Activity() {
             // Close keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editPause.windowToken, 0)
             toggleSetupMenuVisibility( false)
-           binding.setupButton.text = "setup " //set the text on button
+            binding.setupButton.text = "setup " //set the text on button
             binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
             binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
             binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
            // binding.t1View.visibility = View.VISIBLE
         } else { // setup button has been clicked:- change button label to SAVE, open edit texts
-           binding.setupButton.text = "Save  " //set the text on button
+            binding.setupButton.text = "Save  " //set the text on button
             SetInt(binding.editLoop1,loop1) // SetInt (editText, integer value to set)
-            SetInt(binding.editLoop2,loop2)
+            SetInt(binding.editLoop2,loop2) // display loop2 value in editText
             SetInt(binding.editLoop3,loop3) 
             SetInt(binding.editPause,pauseCount) // CustomEditText.SetInt
             toggleSetupMenuVisibility( true)
@@ -194,8 +193,8 @@ class MainActivity : Activity() {
         loop0 = loop1
         t1Counter = -pauseCount
         binding.loop3Button.setBackgroundColor(buttonOffColor)
-        binding.loop2Button?.setBackgroundColor(buttonOffColor)
-        binding.loop1Button?.setBackgroundColor(buttonOnColor)
+        binding.loop2Button.setBackgroundColor(buttonOffColor)
+        binding.loop1Button.setBackgroundColor(buttonOnColor)
         binding.startT2Button.setBackgroundColor(buttonOffColor)
         binding.clearButton.setBackgroundColor(buttonOffColor)
         binding.stopButton.setBackgroundColor(buttonOffColor)
@@ -207,9 +206,9 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop2
         t1Counter = -pauseCount
-        binding.loop1Button?.setBackgroundColor(buttonOffColor)
+        binding.loop1Button.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOffColor)
-        binding.loop2Button?.setBackgroundColor(buttonOnColor)
+        binding.loop2Button.setBackgroundColor(buttonOnColor)
         binding.startT2Button.setBackgroundColor(buttonOffColor)
         binding.clearButton.setBackgroundColor(buttonOffColor)
         binding.stopButton.setBackgroundColor(buttonOffColor)
@@ -220,9 +219,9 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop3
         t1Counter = -pauseCount
-        binding.loop1Button?.setBackgroundColor(buttonOffColor)
+        binding.loop1Button.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOnColor)
-        binding.loop2Button?.setBackgroundColor(buttonOffColor)
+        binding.loop2Button.setBackgroundColor(buttonOffColor)
         binding.startT2Button.setBackgroundColor(buttonOffColor)
         binding.clearButton.setBackgroundColor(buttonOffColor)
         binding.stopButton.setBackgroundColor(buttonOffColor)
