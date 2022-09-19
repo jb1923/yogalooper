@@ -22,7 +22,7 @@ import com.example.yogalooper.databinding.ActivityMainBinding
 class MainActivity : Activity() {
     lateinit var binding: ActivityMainBinding
    private var pauseCount  = 0// pause between loops
-    private var t1Counter  = 0 // seconds counter for loop timer in t1View?
+    private var t1Counter  = 0 // seconds counter for loop timer in binding.t1View
     private var t2Counter = 0 // seconds counter for t2View relaxation timer
     private var loop1  = 0// loop1 time = 45"
     private var loop2  = 0// loop2 time = 60"
@@ -30,17 +30,6 @@ class MainActivity : Activity() {
     private var loop0 = loop1 // loop0 =loop time in seconds ie loop1 or loop2 ie 45" or 60"
     private var t1Running = false
     private var t2Running = false
- //   private var setupButton: Button? = null
- //   private var loop1Button: Button? = null
- //   private var loop2Button: Button? = null
- //   private var loop3Button: Button? = null
- //   private var stopButton: Button? = null
-  //  private var startT2Button: Button? = null
- //   private var clearButton: Button? = null
- //   private var labelPause: TextView? = null
-  //  private var labelLoop1: TextView? = null
- //   private var labelLoop2: TextView? = null
-  //  private var labelLoop3: TextView? = null
 
     // COLORS  go from -1 to - 16777216 white to black
     val colWhite = Integer.decode("0xFFFFFF") - 16777216 //-0x1
@@ -50,7 +39,7 @@ class MainActivity : Activity() {
 
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
-    var t1View: TextView? = null
+ //   var t1View: TextView? = null
     var t2View: TextView? = null
     private var editPause: EditText? = null
     private var editLoop1: EditText? = null
@@ -65,14 +54,7 @@ class MainActivity : Activity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
-     //   setupButton = findViewById<View>(R.id.setupButton) as Button
-        //loop1Button = findViewById<View>(R.id..loop1Button) as Button
-        //loop2Button = findViewById<View>(R.id.loop2Button) as Button
-       // loop3Button = findViewById<View>(R.id.loop3Button) as Button
-       // stopButton = findViewById<View>(R.id.stopButton) as Button
-        //startT2Button = findViewById<View>(R.id.startT2Button) as Button
-        //clearButton = findViewById<View>(R.id.clearButton) as Button
-        t1View = findViewById(R.id.t1View) as TextView
+    //    t1View = findViewById(R.id.t1View) as TextView
         t2View = findViewById(R.id.t2View) as TextView
         binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
         binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
@@ -102,18 +84,18 @@ class MainActivity : Activity() {
                         t1Counter == loop0 -> { t1Counter = -pauseCount // end of loop ie. 45" reset counter to -7
                                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150) }
                     } // end of when
-                    t1View?.setTextColor(if (t1Counter < 0) pauseColor else colWhite)// red text tiCounter < 0 whiteText >= 0
+                    binding.t1View.setTextColor(if (t1Counter < 0) pauseColor else colWhite)// red text tiCounter < 0 whiteText >= 0
                     when { // set textsize and format for t1view displaying ticoounter
-                        loop0 > 599 -> { t1View?.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
-                                           t1View?.textSize = 140f }
-                        loop0 > 60 ->  { t1View?.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
-                                            t1View?.textSize = 160f }
-                        else       ->  { t1View?.text = String.format(Locale.getDefault(),"%02d",Math.abs(t1Counter%60))
-                                            t1View?.textSize = 200f }
+                        loop0 > 599 -> { binding.t1View.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
+                                           binding.t1View.textSize = 140f }
+                        loop0 > 60 ->  { binding.t1View.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
+                                            binding.t1View.textSize = 160f }
+                        else       ->  { binding.t1View.text = String.format(Locale.getDefault(),"%02d",Math.abs(t1Counter%60))
+                                            binding.t1View.textSize = 200f }
                     } // end of when
                     t1Counter++ // update t1Counter if not stopped
                 } else { // if  T1 stopped
-                      t1View?.text = "**"
+                      binding.t1View.text = "**"
                 } // end of if (t1Running)
                 // ##############  update t2Counter on screen ###########################################################
                 t2View?.text = String.format("%02d:%02d:%02d",t2Counter/3600,  t2Counter%3600/60, Math.abs(t2Counter%60))
@@ -142,7 +124,7 @@ class MainActivity : Activity() {
 
     fun toggleSetupMenuVisibility( OnOff: Boolean) {
         if (OnOff == true) { // setup button clicked, so turn on setup menu stuff
-            t1View?.visibility = View.INVISIBLE
+            binding.t1View.visibility = View.INVISIBLE
             binding.loop1Button.visibility = View.INVISIBLE
             binding.loop2Button.visibility = View.INVISIBLE
             binding.loop3Button.visibility = View.INVISIBLE
@@ -166,7 +148,7 @@ class MainActivity : Activity() {
             binding.loop1Button.visibility = View.VISIBLE
             binding.loop2Button.visibility = View.VISIBLE
             binding.loop3Button.visibility = View.VISIBLE
-            t1View!!.visibility = View.VISIBLE
+            binding.t1View.visibility = View.VISIBLE
         }
     }
 
@@ -208,7 +190,7 @@ class MainActivity : Activity() {
             binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
             binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
             binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
-           // t1View!!.visibility = View.VISIBLE
+           // binding.t1View.visibility = View.VISIBLE
         } else { // setup button has been clicked:- change button label to SAVE, open edit texts
            binding.setupButton.text = "Save  " //set the text on button
             SetInt(editLoop1!!,loop1) // SetInt (editText, integer value to set)
