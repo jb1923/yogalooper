@@ -175,19 +175,16 @@ class MainActivity : Activity() {
     }
 
     fun setupLoop1() {
-//        if (binding.editLoop1.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
-        if ( binding.setupButton.text == "Save") {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
+        if ( binding.setupButton.text == "Save") { //Save button clicked:- update loop1, change button label to SETUP
             binding.setupButton.text = "Setup" //set the text on button
             binding.editLoop1.visibility = View.INVISIBLE
             binding.labelLoop1.visibility = View.INVISIBLE
             binding.t1View.visibility = View.VISIBLE
-            loop1 = GetInt(binding.editLoop1,45) // CustomEditText.GetInt
+            loop1 = GetInt(binding.editLoop1,45) // CustomEditText.GetInt ;
             binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
-            //     loop0 = loop1;
-            saveData()
             // Close keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editLoop1.windowToken, 0)
-        } else { // Setup button has been clicked:- change button label to SAVE, open edit texts
+        } else { // buttonLongClick (setup view) change button label to SAVE, open edit texts
             binding.setupButton.text = "Save" //set the text on button
             SetInt(binding.editLoop1,loop1) // SetInt (editText, integer value to set)
             binding.t1View.visibility = View.INVISIBLE
@@ -195,7 +192,6 @@ class MainActivity : Activity() {
             binding.labelLoop1.visibility = View.VISIBLE
             // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editLoop1, InputMethodManager.SHOW_FORCED)
-            //binding.editPause.setSelection(binding.editPause.text.length)
         }
     }
 
