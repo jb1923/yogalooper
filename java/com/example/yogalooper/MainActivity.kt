@@ -114,30 +114,8 @@ class MainActivity : Activity() {
      }
 
     fun SetInt(edTxt : EditText, value: Int) { //displays  integer value in EditText
-        edTxt.setText(" " + Integer.toString(value) + " ") // add spaces for easy selectin
+        edTxt.setText("" + Integer.toString(value) + "") // add spaces for easy selectin
     }
-
-
-    fun toggleSetupLoop1Visibility( OnOff: Boolean) {
-        if (OnOff == true) { // Setup button clicked, so turn on Setup menu stuff
-            binding.t1View.visibility = View.INVISIBLE
-            binding.loop1Button.visibility = View.INVISIBLE
-            binding.loop2Button.visibility = View.INVISIBLE
-            binding.loop3Button.visibility = View.INVISIBLE
-            binding.editLoop1.visibility = View.VISIBLE
-            binding.labelLoop1.visibility = View.VISIBLE
-        } else {// normal,so turn on loop buttons and tiView
-            binding.editLoop1.visibility = View.INVISIBLE
-            binding.labelLoop1.visibility = View.INVISIBLE
-            binding.loop1Button.visibility = View.VISIBLE
-            binding.loop2Button.visibility = View.VISIBLE
-            binding.loop3Button.visibility = View.VISIBLE
-            binding.t1View.visibility = View.VISIBLE
-        }
-    }
-
-
-
 
     fun toggleSetupMenuVisibility( OnOff: Boolean) {
         if (OnOff == true) { // Setup button clicked, so turn on Setup menu stuff
@@ -196,28 +174,26 @@ class MainActivity : Activity() {
 
     }
 
-
-
-
     fun setupLoop1() {
 //        if (binding.editLoop1.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
         if ( binding.setupButton.text == "Save") {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
-            t1Counter = -pauseCount // need -ive number for countdown
+            binding.setupButton.text = "Setup" //set the text on button
+            binding.editLoop1.visibility = View.INVISIBLE
+            binding.labelLoop1.visibility = View.INVISIBLE
+            binding.t1View.visibility = View.VISIBLE
             loop1 = GetInt(binding.editLoop1,45) // CustomEditText.GetInt
+            binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
             //     loop0 = loop1;
             saveData()
             // Close keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editLoop1.windowToken, 0)
-            toggleSetupLoop1Visibility( false)
-            binding.setupButton.text = "Setup" //set the text on button
-            binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
-            binding.setupButton.text = "Setup" //set the text on button
-            // binding.t1View.visibility = View.VISIBLE
         } else { // Setup button has been clicked:- change button label to SAVE, open edit texts
             binding.setupButton.text = "Save" //set the text on button
             SetInt(binding.editLoop1,loop1) // SetInt (editText, integer value to set)
-            binding.editLoop1.setSelection(1)
-            toggleSetupLoop1Visibility( true)
+          //  binding.editLoop1.setSelection(1)
+            binding.t1View.visibility = View.INVISIBLE
+            binding.editLoop1.visibility = View.VISIBLE
+            binding.labelLoop1.visibility = View.VISIBLE
             // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editLoop1, InputMethodManager.SHOW_FORCED)
             //binding.editPause.setSelection(binding.editPause.text.length)
