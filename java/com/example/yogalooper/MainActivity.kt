@@ -190,7 +190,6 @@ class MainActivity : Activity() {
         } else { // Setup button has been clicked:- change button label to SAVE, open edit texts
             binding.setupButton.text = "Save" //set the text on button
             SetInt(binding.editLoop1,loop1) // SetInt (editText, integer value to set)
-          //  binding.editLoop1.setSelection(1)
             binding.t1View.visibility = View.INVISIBLE
             binding.editLoop1.visibility = View.VISIBLE
             binding.labelLoop1.visibility = View.VISIBLE
@@ -199,9 +198,6 @@ class MainActivity : Activity() {
             //binding.editPause.setSelection(binding.editPause.text.length)
         }
     }
-
-
-
 
     fun onClickSetup(view: View) {
 //        if (binding.editLoop1.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
