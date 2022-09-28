@@ -57,6 +57,13 @@ class MainActivity : Activity() {
             true
         }
 
+        binding.loop2Button.setOnClickListener {
+            onClickLoop2()
+        }
+        binding.loop3Button.setOnClickListener {
+            onClickLoop3()
+        }
+
         toggleSetupMenuVisibility( false) // hide Setup menu, show buttons
         runT1T2counters()
     } // end of onCreate(savedInstanceState: Bundle
@@ -283,7 +290,7 @@ class MainActivity : Activity() {
         binding.clearButton.setBackgroundColor(buttonOffColor)
         binding.stopButton.setBackgroundColor(buttonOffColor)
   }
-    fun onClickLoop3(view: View) {
+    fun onClickLoop3() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = true
         t2Running = true

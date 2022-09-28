@@ -147,7 +147,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:onClick="onClickLoop2"
         android:text="Loop 60"
         />
     <Button
@@ -157,7 +156,6 @@
         android:layout_below="@+id/t1View"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:onClick="onClickLoop3"
         android:text="Loop 60"
         />
     <!-- t2counter display and buttons at bottom of screen -->
