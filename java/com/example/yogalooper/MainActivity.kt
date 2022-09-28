@@ -43,11 +43,21 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
-       // hide setup menu
-        toggleSetupMenuVisibility( false)
+
+        binding.loop1Button.setOnClickListener {
+            onClickLoop1()
+        }
+
+         binding.loop1Button.setOnLongClickListener {
+             setupLoop1()
+            true
+        }
+
+        toggleSetupMenuVisibility( false) // hide Setup menu, show buttons
         runT1T2counters()
     } // end of onCreate(savedInstanceState: Bundle
 
@@ -63,7 +73,7 @@ class MainActivity : Activity() {
                                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150) }
                     } // end of when
                     binding.t1View.setTextColor(if (t1Counter < 0) pauseColor else colWhite)// red text tiCounter < 0 whiteText >= 0
-                    when { // set textsize and format for t1view displaying ticoounter
+                    when { // set textsize and format for t1view displaying t1Coounter
                         loop0 > 599 -> { binding.t1View.text = String.format(Locale.getDefault(),"%02d:%02d", t1Counter/60, Math.abs(t1Counter%60))
                                            binding.t1View.textSize = 140f }
                         loop0 > 60 ->  { binding.t1View.text = String.format(Locale.getDefault(),"%01d:%02d",  t1Counter/60, Math.abs(t1Counter%60))
@@ -100,8 +110,30 @@ class MainActivity : Activity() {
         edTxt.setText(" " + Integer.toString(value) + " ") // add spaces for easy selectin
     }
 
+
+    fun toggleSetupLoop1Visibility( OnOff: Boolean) {
+        if (OnOff == true) { // Setup button clicked, so turn on Setup menu stuff
+            binding.t1View.visibility = View.INVISIBLE
+            binding.loop1Button.visibility = View.INVISIBLE
+            binding.loop2Button.visibility = View.INVISIBLE
+            binding.loop3Button.visibility = View.INVISIBLE
+            binding.editLoop1.visibility = View.VISIBLE
+            binding.labelLoop1.visibility = View.VISIBLE
+        } else {// normal,so turn on loop buttons and tiView
+            binding.editLoop1.visibility = View.INVISIBLE
+            binding.labelLoop1.visibility = View.INVISIBLE
+            binding.loop1Button.visibility = View.VISIBLE
+            binding.loop2Button.visibility = View.VISIBLE
+            binding.loop3Button.visibility = View.VISIBLE
+            binding.t1View.visibility = View.VISIBLE
+        }
+    }
+
+
+
+
     fun toggleSetupMenuVisibility( OnOff: Boolean) {
-        if (OnOff == true) { // setup button clicked, so turn on setup menu stuff
+        if (OnOff == true) { // Setup button clicked, so turn on Setup menu stuff
             binding.t1View.visibility = View.INVISIBLE
             binding.loop1Button.visibility = View.INVISIBLE
             binding.loop2Button.visibility = View.INVISIBLE
@@ -153,11 +185,44 @@ class MainActivity : Activity() {
         binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
         binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
         binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
+        binding.labelPauseCount.text = " " + Integer.toString(pauseCount) //set the text on button
 
     }
 
+
+
+
+    fun setupLoop1() {
+//        if (binding.editLoop1.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
+        if ( binding.setupButton.text == "Save") {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
+            t1Counter = -pauseCount // need -ive number for countdown
+            loop1 = GetInt(binding.editLoop1,45) // CustomEditText.GetInt
+            //     loop0 = loop1;
+            saveData()
+            // Close keyboard
+            (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editLoop1.windowToken, 0)
+            toggleSetupLoop1Visibility( false)
+            binding.setupButton.text = "Setup" //set the text on button
+            binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
+            binding.setupButton.text = "Setup" //set the text on button
+            // binding.t1View.visibility = View.VISIBLE
+        } else { // Setup button has been clicked:- change button label to SAVE, open edit texts
+            binding.setupButton.text = "Save" //set the text on button
+            SetInt(binding.editLoop1,loop1) // SetInt (editText, integer value to set)
+            binding.editLoop1.setSelection(1)
+            toggleSetupLoop1Visibility( true)
+            // Open keyboard
+            (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editLoop1, InputMethodManager.SHOW_FORCED)
+            //binding.editPause.setSelection(binding.editPause.text.length)
+        }
+    }
+
+
+
+
     fun onClickSetup(view: View) {
-        if (binding.editLoop1.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
+//        if (binding.editLoop1.visibility == View.VISIBLE) {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
+        if ( binding.setupButton.text == "Save") {   // save button has been clicked:- update loop1,loop2,pauseCount, change button label to SETUP
             pauseCount = GetInt(binding.editPause,7) // CustomEditText.GetInt
             t1Counter = -pauseCount // need -ive number for countdown
             loop1 = GetInt(binding.editLoop1,45) // CustomEditText.GetInt
@@ -168,17 +233,22 @@ class MainActivity : Activity() {
             // Close keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editPause.windowToken, 0)
             toggleSetupMenuVisibility( false)
-            binding.setupButton.text = "setup " //set the text on button
+            binding.setupButton.text = "Setup" //set the text on button
             binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
             binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
             binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
+            binding.labelPauseCount.text = " " + Integer.toString(pauseCount) //set the text on button
            // binding.t1View.visibility = View.VISIBLE
-        } else { // setup button has been clicked:- change button label to SAVE, open edit texts
-            binding.setupButton.text = "Save  " //set the text on button
+        } else { // Setup button has been clicked:- change button label to SAVE, open edit texts
+            binding.setupButton.text = "Save" //set the text on button
             SetInt(binding.editLoop1,loop1) // SetInt (editText, integer value to set)
             SetInt(binding.editLoop2,loop2) // display loop2 value in editText
             SetInt(binding.editLoop3,loop3) 
             SetInt(binding.editPause,pauseCount) // CustomEditText.SetInt
+            binding.editPause.setSelection(1)
+            binding.editLoop1.setSelection(1)
+            binding.editLoop2.setSelection(1)
+            binding.editLoop3.setSelection(1)
             toggleSetupMenuVisibility( true)
              // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editPause, InputMethodManager.SHOW_FORCED)
@@ -186,7 +256,7 @@ class MainActivity : Activity() {
         }
     }
 
-    fun onClickLoop1(view: View) {
+    fun onClickLoop1() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = true
         t2Running = true
@@ -200,7 +270,7 @@ class MainActivity : Activity() {
         binding.stopButton.setBackgroundColor(buttonOffColor)
     }
 
-    fun onClickLoop2(view: View) {
+    fun onClickLoop2() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = true
         t2Running = true
