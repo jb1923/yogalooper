@@ -6,16 +6,15 @@
     android:orientation="vertical"
 
     <!--Label which shows the pause delay in red at top R of screen  -->
-    <TextView
-        android:id="@+id/labelPauseCount"
+    <Button
+        android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:text="7"
-        android:textColor="#F00"
+        android:layout_below="@+id/t1View"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Pause 7"
         />
 
     <!-- change loop count  -->
@@ -40,7 +39,7 @@
         android:textColor="#fff"
         android:maxLines="1" />
 
-    <!-- END OF setup button and EditText to change timer values  -->
+    <!-- END OF label and  EditText to change timer values  -->
 
     <!-- loop timer t1Counter display AND BUTTONS    -->
     <TextView
