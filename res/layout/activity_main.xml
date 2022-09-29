@@ -62,7 +62,41 @@
         android:text="45"
         android:textColor="#fff"
         android:maxLines="1" />
-<!-- setup menu loop2  -->
+
+    <!-- change loop count  -->
+    <TextView
+        android:id="@+id/labelCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelPause"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:text="Time:-  "
+        android:textColor="#FFF"
+        />
+    <EditText
+        android:id="@+id/editCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelPause"
+        android:layout_toRightOf="@+id/labelLoop1"
+        android:clickable="true"
+        android:inputType="number"
+        android:text="45"
+        android:textColor="#fff"
+        android:maxLines="1" />
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:text="Save"/>
+    <!-- setup menu loop2  -->
     <TextView
         android:id="@+id/labelLoop2"
         android:layout_width="wrap_content"

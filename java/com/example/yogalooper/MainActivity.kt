@@ -48,12 +48,15 @@ class MainActivity : Activity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
 
+        binding.saveButton.setOnClickListener {
+            onClickSave()
+        }
         binding.loop1Button.setOnClickListener {
             onClickLoop1()
         }
 
          binding.loop1Button.setOnLongClickListener {
-             setupLoop1()
+             changeCount(loop1)
             true
         }
 
@@ -144,6 +147,11 @@ class MainActivity : Activity() {
             binding.loop2Button.visibility = View.VISIBLE
             binding.loop3Button.visibility = View.VISIBLE
             binding.t1View.visibility = View.VISIBLE
+
+            binding.editCount.visibility = View.INVISIBLE
+            binding.labelCount.visibility = View.INVISIBLE
+            binding.saveButton.visibility = View.INVISIBLE
+
         }
     }
 
@@ -174,7 +182,34 @@ class MainActivity : Activity() {
 
     }
 
-    fun setupLoop1() {
+    fun changeCount(count: Int){
+  // buttonLongClick (setup view) change button label to SAVE, open edit texts
+        //    binding.setupButton.text = "Save" //set the text on button
+            SetInt(binding.editCount,count) // SetInt (editText, integer value to set)
+            binding.t1View.visibility = View.INVISIBLE
+            binding.editCount.visibility = View.VISIBLE
+            binding.labelCount.visibility = View.VISIBLE
+            binding.saveButton.visibility = View.VISIBLE
+            // Open keyboard
+            (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editCount, InputMethodManager.SHOW_FORCED)
+        }
+    fun onClickSave(){
+        binding.editCount.visibility = View.INVISIBLE
+        binding.labelCount.visibility = View.INVISIBLE
+        binding.saveButton.visibility = View.INVISIBLE
+        binding.t1View.visibility = View.VISIBLE
+        loop1 = GetInt(binding.editCount,10) // CustomEditText.GetInt ;
+        (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
+
+        binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
+        // Close keyboard
+
+
+
+    }
+
+
+        fun setupLoop1() {
         if ( binding.setupButton.text == "Save") { //Save button clicked:- update loop1, change button label to SETUP
             binding.setupButton.text = "Setup" //set the text on button
             binding.editLoop1.visibility = View.INVISIBLE
