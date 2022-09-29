@@ -15,6 +15,7 @@ import android.media.AudioManager
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.view.isVisible
 import com.example.yogalooper.databinding.ActivityMainBinding
 
 class MainActivity : Activity() {
@@ -29,6 +30,7 @@ class MainActivity : Activity() {
     private var loop0 = loop1 // loop0 =loop time in seconds ie loop1 or loop2 ie 45" or 60"
     private var t1Running = false
     private var t2Running = false
+    private var thisButton = "loop1"
 
     // COLORS  go from -1 to - 16777216 white to black
     val colWhite       = Integer.decode("0xFFFFFF") - 16777216 //-0x1
@@ -48,23 +50,34 @@ class MainActivity : Activity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
 
-        binding.saveButton.setOnClickListener {
-            onClickSave()
-        }
         binding.loop1Button.setOnClickListener {
+            if (binding.editCount.isVisible) onClickSave()
             onClickLoop1()
         }
-
          binding.loop1Button.setOnLongClickListener {
+            thisButton = "loop1"
              changeCount(loop1)
             true
         }
 
         binding.loop2Button.setOnClickListener {
-            onClickLoop2()
+            if (binding.editCount.isVisible) onClickSave()
+            else  onClickLoop2()
         }
+        binding.loop2Button.setOnLongClickListener {
+            thisButton = "loop2"
+            changeCount(loop2)
+            true
+        }
+
         binding.loop3Button.setOnClickListener {
-            onClickLoop3()
+            if (binding.editCount.isVisible) onClickSave()
+            else onClickLoop3()
+        }
+        binding.loop3Button.setOnLongClickListener {
+            thisButton = "loop3"
+            changeCount(loop3)
+            true
         }
 
         toggleSetupMenuVisibility( false) // hide Setup menu, show buttons
@@ -150,7 +163,6 @@ class MainActivity : Activity() {
 
             binding.editCount.visibility = View.INVISIBLE
             binding.labelCount.visibility = View.INVISIBLE
-            binding.saveButton.visibility = View.INVISIBLE
 
         }
     }
@@ -189,25 +201,26 @@ class MainActivity : Activity() {
             binding.t1View.visibility = View.INVISIBLE
             binding.editCount.visibility = View.VISIBLE
             binding.labelCount.visibility = View.VISIBLE
-            binding.saveButton.visibility = View.VISIBLE
             // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editCount, InputMethodManager.SHOW_FORCED)
         }
     fun onClickSave(){
         binding.editCount.visibility = View.INVISIBLE
         binding.labelCount.visibility = View.INVISIBLE
-        binding.saveButton.visibility = View.INVISIBLE
         binding.t1View.visibility = View.VISIBLE
-        loop1 = GetInt(binding.editCount,10) // CustomEditText.GetInt ;
+        loop0 = GetInt(binding.editCount,10)
+
+        when { // tone PIP at 0 and loop0 45"
+            thisButton ==   "loop1" -> {loop1 = loop0 // CustomEditText.GetInt ;
+                binding.loop1Button.text = "loop " + Integer.toString(loop0)} //set button text// }
+            thisButton ==   "loop2" -> {loop2 = loop0 // CustomEditText.GetInt ;
+                binding.loop2Button.text = "loop " + Integer.toString(loop0)} //set button text// }
+            thisButton ==   "loop3" -> {loop3 = loop0 // CustomEditText.GetInt ;
+                binding.loop3Button.text = "loop " + Integer.toString(loop0)} //set button text// }
+         } // end of when
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
-
-        binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
         // Close keyboard
-
-
-
     }
-
 
         fun setupLoop1() {
         if ( binding.setupButton.text == "Save") { //Save button clicked:- update loop1, change button label to SETUP
