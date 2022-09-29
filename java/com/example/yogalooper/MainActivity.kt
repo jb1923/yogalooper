@@ -50,13 +50,23 @@ class MainActivity : Activity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
 
+        binding.pauseButton.setOnClickListener {
+            if (binding.editCount.isVisible) onClickSave()
+            onClickPause()
+        }
+         binding.pauseButton.setOnLongClickListener {
+            thisButton = "pause"
+             changeCount(pauseCount)
+            true
+        }
+
         binding.loop1Button.setOnClickListener {
             if (binding.editCount.isVisible) onClickSave()
             onClickLoop1()
         }
-         binding.loop1Button.setOnLongClickListener {
+        binding.loop1Button.setOnLongClickListener {
             thisButton = "loop1"
-             changeCount(loop1)
+            changeCount(loop1)
             true
         }
 
@@ -176,7 +186,7 @@ class MainActivity : Activity() {
         binding.loop1Button.text = "loop " + Integer.toString(loop1) //set the text on button
         binding.loop2Button.text = "loop " + Integer.toString(loop2) //set the text on button
         binding.loop3Button.text = "loop " + Integer.toString(loop3) //set the text on button
-        binding.pauseButton.text = "loop " + Integer.toString(pauseCount) //set the text on button
+        binding.pauseButton.text = "pause " + Integer.toString(pauseCount) //set the text on button
 
     }
 
@@ -203,9 +213,26 @@ class MainActivity : Activity() {
                 binding.loop2Button.text = "loop " + Integer.toString(loop0)} //set button text// }
             thisButton ==   "loop3" -> {loop3 = loop0 // CustomEditText.GetInt ;
                 binding.loop3Button.text = "loop " + Integer.toString(loop0)} //set button text// }
+            thisButton ==   "pause" -> {pauseCount = loop0 // CustomEditText.GetInt ;
+                binding.pauseButton.text = "pause " + Integer.toString(loop0)//set button text//
+                onClickLoop1() } // start loop1 timer
          } // end of when
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
         // Close keyboard
+    }
+
+    fun onClickPause() {
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+        t1Running = false
+        t2Running = false
+      //  t1Counter = -pauseCount
+        binding.loop3Button.setBackgroundColor(buttonOffColor)
+        binding.loop2Button.setBackgroundColor(buttonOffColor)
+        binding.loop1Button.setBackgroundColor(buttonOffColor)
+        binding.pauseButton.setBackgroundColor(buttonOnColor)
+        binding.startT2Button.setBackgroundColor(buttonOffColor)
+        binding.clearButton.setBackgroundColor(buttonOffColor)
+        binding.stopButton.setBackgroundColor(buttonOffColor)
     }
 
     fun onClickLoop1() {
@@ -214,6 +241,7 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop1
         t1Counter = -pauseCount
+        binding.pauseButton.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOnColor)
@@ -228,6 +256,7 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop2
         t1Counter = -pauseCount
+        binding.pauseButton.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOnColor)
@@ -241,6 +270,7 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop3
         t1Counter = -pauseCount
+        binding.pauseButton.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOnColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
