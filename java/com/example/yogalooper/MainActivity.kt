@@ -139,23 +139,7 @@ class MainActivity : Activity() {
             binding.loop1Button.visibility = View.INVISIBLE
             binding.loop2Button.visibility = View.INVISIBLE
             binding.loop3Button.visibility = View.INVISIBLE
-            binding.labelPause.visibility = View.VISIBLE
-            binding.editPause.visibility = View.VISIBLE
-            binding.editLoop1.visibility = View.VISIBLE
-            binding.labelLoop1.visibility = View.VISIBLE
-            binding.editLoop2.visibility = View.VISIBLE
-            binding.labelLoop2.visibility = View.VISIBLE
-            binding.editLoop3.visibility = View.VISIBLE
-            binding.labelLoop3.visibility = View.VISIBLE
         } else {// normal,so turn on loop buttons and tiView
-            binding.editPause.visibility = View.INVISIBLE
-            binding.labelPause.visibility = View.INVISIBLE
-            binding.editLoop1.visibility = View.INVISIBLE
-            binding.labelLoop1.visibility = View.INVISIBLE
-            binding.editLoop2.visibility = View.INVISIBLE
-            binding.labelLoop2.visibility = View.INVISIBLE
-            binding.editLoop3.visibility = View.INVISIBLE
-            binding.labelLoop3.visibility = View.INVISIBLE
             binding.loop1Button.visibility = View.VISIBLE
             binding.loop2Button.visibility = View.VISIBLE
             binding.loop3Button.visibility = View.VISIBLE
