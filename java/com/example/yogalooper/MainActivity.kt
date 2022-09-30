@@ -30,7 +30,7 @@ class MainActivity : Activity() {
     private var loop0 = loop1 // loop0 =loop time in seconds ie loop1 or loop2 ie 45" or 60"
     private var t1Running = false
     private var t2Running = false
-    private var thisButton = "loop1"
+//   private var thisButton = "loop1"
 
     // COLORS  go from -1 to - 16777216 white to black
     val colWhite       = Integer.decode("0xFFFFFF") - 16777216 //-0x1
@@ -51,47 +51,54 @@ class MainActivity : Activity() {
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
 
         binding.pauseButton.setOnClickListener {
-            if (binding.editCount.isVisible) onClickSave()
+            if (binding.editCount.isVisible) pauseCount= saveCount(binding.pauseButton)
             onClickPause()
         }
          binding.pauseButton.setOnLongClickListener {
-            thisButton = "pause"
+             t1Running = false
+             t2Running = false
              changeCount(pauseCount)
             true
         }
 
         binding.loop1Button.setOnClickListener {
-            if (binding.editCount.isVisible) onClickSave()
-            onClickLoop1()
+            if (binding.editCount.isVisible) loop1= saveCount(binding.loop1Button)
+            else onClickLoop1()
         }
         binding.loop1Button.setOnLongClickListener {
-            thisButton = "loop1"
+          //  thisButton = "loop1"
+            t1Running = false
+            t2Running = false
             changeCount(loop1)
             true
         }
 
         binding.loop2Button.setOnClickListener {
-            if (binding.editCount.isVisible) onClickSave()
-            else  onClickLoop2()
+            if (binding.editCount.isVisible) loop2= saveCount(binding.loop2Button)
+            else onClickLoop2()
         }
         binding.loop2Button.setOnLongClickListener {
-            thisButton = "loop2"
+            //  thisButton = "loop2"
+            t1Running = false
+            t2Running = false
             changeCount(loop2)
             true
         }
-
         binding.loop3Button.setOnClickListener {
-            if (binding.editCount.isVisible) onClickSave()
+            if (binding.editCount.isVisible) loop3= saveCount(binding.loop3Button)
             else onClickLoop3()
         }
         binding.loop3Button.setOnLongClickListener {
-            thisButton = "loop3"
+            //  thisButton = "loop3"
+            t1Running = false
+            t2Running = false
             changeCount(loop3)
             true
         }
 
         toggleSetupMenuVisibility( false) // hide Setup menu, show buttons
         runT1T2counters()
+        saveData()
     } // end of onCreate(savedInstanceState: Bundle
 
     private fun runT1T2counters() {
@@ -200,7 +207,26 @@ class MainActivity : Activity() {
             // Open keyboard
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editCount, InputMethodManager.SHOW_FORCED)
         }
-    fun onClickSave(){
+
+
+
+    fun saveCount(btn: Button): Int{ // updates btn.txt and loopcount with new count
+        binding.editCount.visibility = View.INVISIBLE
+        binding.labelCount.visibility = View.INVISIBLE
+        binding.t1View.visibility = View.VISIBLE
+        loop0 = GetInt(binding.editCount,10)
+        //set button text//
+        btn.text = "loop " + Integer.toString(loop0)
+        // Close keyboard
+        (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
+        return loop0
+    }
+
+
+
+
+
+  /*  fun onClickSave(){
         binding.editCount.visibility = View.INVISIBLE
         binding.labelCount.visibility = View.INVISIBLE
         binding.t1View.visibility = View.VISIBLE
@@ -220,7 +246,7 @@ class MainActivity : Activity() {
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
         // Close keyboard
     }
-
+*/
     fun onClickPause() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = false
@@ -292,7 +318,7 @@ class MainActivity : Activity() {
         binding.stopButton.setBackgroundColor(buttonOffColor)
     }
 
-    fun onClickStop(view: View) {
+    fun onClickStop() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Running = false
         t2Running = false
