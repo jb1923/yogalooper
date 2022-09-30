@@ -49,7 +49,7 @@ class MainActivity : Activity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
-
+        binding.pauseButton.setBackgroundColor(pauseColor)
         binding.pauseButton.setOnClickListener {
             if (binding.editCount.isVisible) { pauseCount= saveCount(binding.pauseButton,"pause")
             saveData() }
@@ -206,9 +206,7 @@ class MainActivity : Activity() {
 
     }
 
-    fun changeCount(count: Int){
-  // buttonLongClick (setup view) change button label to SAVE, open edit texts
-        //    binding.setupButton.text = "Save" //set the text on button
+    fun changeCount(count: Int){  //  show editText (editCount visible) to modify values
             SetInt(binding.editCount,count) // SetInt (editText, integer value to set)
             binding.t1View.visibility = View.INVISIBLE
             binding.editCount.visibility = View.VISIBLE
@@ -218,11 +216,11 @@ class MainActivity : Activity() {
         }
 
     fun saveCount(btn:Button, btnText:String): Int{ // updates btn.txt and loopcount with new count
-        binding.editCount.visibility = View.INVISIBLE
+        binding.editCount.visibility = View.INVISIBLE  // editCount Invisible
         binding.labelCount.visibility = View.INVISIBLE
-        binding.t1View.visibility = View.VISIBLE
+        binding.t1View.visibility = View.VISIBLE // ticounter visible
         loop0 = GetInt(binding.editCount,10)
-        btn.text = btnText+" "+Integer.toString(loop0) //set button text//
+        btn.text = btnText+" "+Integer.toString(loop0) //set button text to new value ie loop 46
         // Close keyboard
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
         btn.setBackgroundColor(buttonOffColor)
@@ -237,7 +235,7 @@ class MainActivity : Activity() {
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
-        binding.pauseButton.setBackgroundColor(buttonOffColor)
+        binding.pauseButton.setBackgroundColor(pauseColor)
         binding.startT2Button.setBackgroundColor(buttonOffColor)
         binding.clearButton.setBackgroundColor(buttonOffColor)
         binding.stopButton.setBackgroundColor(buttonOffColor)
@@ -249,7 +247,7 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop1
         t1Counter = -pauseCount
-        binding.pauseButton.setBackgroundColor(buttonOffColor)
+        binding.pauseButton.setBackgroundColor(pauseColor)
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOnColor)
@@ -264,7 +262,7 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop2
         t1Counter = -pauseCount
-        binding.pauseButton.setBackgroundColor(buttonOffColor)
+        binding.pauseButton.setBackgroundColor(pauseColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOnColor)
@@ -278,7 +276,7 @@ class MainActivity : Activity() {
         t2Running = true
         loop0 = loop3
         t1Counter = -pauseCount
-        binding.pauseButton.setBackgroundColor(buttonOffColor)
+        binding.pauseButton.setBackgroundColor(pauseColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
         binding.loop3Button.setBackgroundColor(buttonOnColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
