@@ -51,11 +51,13 @@ class MainActivity : Activity() {
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
 
         binding.pauseButton.setOnClickListener {
-            if (binding.editCount.isVisible) { pauseCount= saveCount(binding.pauseButton)
-            saveData()}
+            if (binding.editCount.isVisible) { pauseCount= saveCount(binding.pauseButton,"pause")
+            saveData() }
         onClickPause()
         }
          binding.pauseButton.setOnLongClickListener {
+             binding.pauseButton.text = "SAVE"
+             binding.pauseButton.setBackgroundColor(buttonOnColor)
              t1Running = false
              t2Running = false
              changeCount(pauseCount)
@@ -64,12 +66,13 @@ class MainActivity : Activity() {
 
         binding.loop1Button.setOnClickListener {
             if (binding.editCount.isVisible)  {
-                loop1= saveCount(binding.loop1Button)
-                saveData()}
+                loop1= saveCount(binding.loop1Button,"loop")
+                saveData() }
             else onClickLoop1()
         }
-        binding.loop1Button.setOnLongClickListener {
-          //  thisButton = "loop1"
+        binding.loop1Button.setOnLongClickListener { // open editText to change loop1
+            binding.loop1Button.text = "SAVE"
+            binding.loop1Button.setBackgroundColor(buttonOnColor)
             t1Running = false
             t2Running = false
             changeCount(loop1)
@@ -77,24 +80,26 @@ class MainActivity : Activity() {
         }
 
         binding.loop2Button.setOnClickListener {
-            if (binding.editCount.isVisible) { loop2= saveCount(binding.loop2Button)
+            if (binding.editCount.isVisible) { loop2= saveCount(binding.loop2Button,"loop")
             saveData()}
         else onClickLoop2()
         }
-        binding.loop2Button.setOnLongClickListener {
-            //  thisButton = "loop2"
+        binding.loop2Button.setOnLongClickListener { // open editText to change loop2
+            binding.loop2Button.text = "SAVE"
+            binding.loop2Button.setBackgroundColor(buttonOnColor)
             t1Running = false
             t2Running = false
             changeCount(loop2)
             true
         }
         binding.loop3Button.setOnClickListener {
-            if (binding.editCount.isVisible) { loop3= saveCount(binding.loop3Button)
+            if (binding.editCount.isVisible) { loop3= saveCount(binding.loop3Button,"loop")
             saveData()}
         else onClickLoop3()
         }
-        binding.loop3Button.setOnLongClickListener {
-            //  thisButton = "loop3"
+        binding.loop3Button.setOnLongClickListener { // open editText to change loop3
+            binding.loop3Button.text = "SAVE"
+            binding.loop3Button.setBackgroundColor(buttonOnColor)
             t1Running = false
             t2Running = false
             changeCount(loop3)
@@ -212,14 +217,15 @@ class MainActivity : Activity() {
             (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(binding.editCount, InputMethodManager.SHOW_FORCED)
         }
 
-    fun saveCount(btn: Button): Int{ // updates btn.txt and loopcount with new count
+    fun saveCount(btn:Button, btnText:String): Int{ // updates btn.txt and loopcount with new count
         binding.editCount.visibility = View.INVISIBLE
         binding.labelCount.visibility = View.INVISIBLE
         binding.t1View.visibility = View.VISIBLE
         loop0 = GetInt(binding.editCount,10)
-        btn.text = "loop " + Integer.toString(loop0) //set button text//
+        btn.text = btnText+" "+Integer.toString(loop0) //set button text//
         // Close keyboard
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(binding.editCount.windowToken, 0)
+        btn.setBackgroundColor(buttonOffColor)
         return loop0
     }
 
@@ -231,7 +237,7 @@ class MainActivity : Activity() {
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
-        binding.pauseButton.setBackgroundColor(buttonOnColor)
+        binding.pauseButton.setBackgroundColor(buttonOffColor)
         binding.startT2Button.setBackgroundColor(buttonOffColor)
         binding.clearButton.setBackgroundColor(buttonOffColor)
         binding.stopButton.setBackgroundColor(buttonOffColor)
