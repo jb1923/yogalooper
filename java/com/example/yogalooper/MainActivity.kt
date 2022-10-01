@@ -2,7 +2,7 @@ package com.example.yogalooper
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+//import android.widget.TextView
 import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.os.Handler
@@ -54,7 +54,7 @@ class MainActivity : Activity() {
         binding.pauseButton.setOnClickListener {
             if (binding.editCount.isVisible) { pauseCount= saveCount(binding.pauseButton,"pause")
             saveData() }
-        onClickPause()
+            onClickPause()
         }
          binding.pauseButton.setOnLongClickListener {
              binding.pauseButton.text = "SAVE"
@@ -62,7 +62,7 @@ class MainActivity : Activity() {
              t1Running = false
              t2Running = false
              changeCount(pauseCount)
-            true
+             true
         }
         //LOOP1 BUTTON
         binding.loop1Button.setOnClickListener {
@@ -237,7 +237,7 @@ class MainActivity : Activity() {
     }
 
     fun onClickPause() {
-        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
+        //toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = false
         t2Running = false
         binding.loop3Button.setBackgroundColor(buttonOffColor)

@@ -22,7 +22,7 @@
         android:id="@+id/labelCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/labelPauseButton"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="10dp"
         android:text="Time:-  "
