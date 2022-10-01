@@ -36,7 +36,7 @@ class MainActivity : Activity() {
     val colWhite       = Integer.decode("0xFFFFFF") - 16777216 //-0x1
     val buttonOffColor = Integer.decode("0xAAAAAA") - 16777216
     val buttonOnColor  = Integer.decode("0xFFFF00") - 16777216 //-0x100
-    val pauseColor     = Integer.decode("0xFF0000") - 16777216// -0x10000
+    val pauseColor     = Integer.decode("0xFF4444") - 16777216// -0x10000
 
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
@@ -49,6 +49,7 @@ class MainActivity : Activity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         loadData()// load loop1,loop2, loop3 pauseCount from previous run
+        // PAUSE BUTTON
         binding.pauseButton.setBackgroundColor(pauseColor)
         binding.pauseButton.setOnClickListener {
             if (binding.editCount.isVisible) { pauseCount= saveCount(binding.pauseButton,"pause")
@@ -63,7 +64,7 @@ class MainActivity : Activity() {
              changeCount(pauseCount)
             true
         }
-
+        //LOOP1 BUTTON
         binding.loop1Button.setOnClickListener {
             if (binding.editCount.isVisible)  {
                 loop1= saveCount(binding.loop1Button,"loop")
@@ -78,7 +79,7 @@ class MainActivity : Activity() {
             changeCount(loop1)
             true
         }
-
+        //LOOP2 BUTTON
         binding.loop2Button.setOnClickListener {
             if (binding.editCount.isVisible) { loop2= saveCount(binding.loop2Button,"loop")
             saveData()}
@@ -92,6 +93,7 @@ class MainActivity : Activity() {
             changeCount(loop2)
             true
         }
+        //LOOP3 BUTTON
         binding.loop3Button.setOnClickListener {
             if (binding.editCount.isVisible) { loop3= saveCount(binding.loop3Button,"loop")
             saveData()}
@@ -105,9 +107,20 @@ class MainActivity : Activity() {
             changeCount(loop3)
             true
         }
-
+        //STOP BUTTON
+        binding.stopButton.setOnClickListener {
+            onClickStop()
+        }
+        //START BUTTON
+        binding.startT2Button.setOnClickListener {
+            onClickStartT2()
+        }
+        CLEAR BUTTON
+        binding.clearButton.setOnClickListener {
+            onClickClear()
+        }
         toggleSetupMenuVisibility( false) // hide Setup menu, show buttons
-        runT1T2counters()
+        runT1T2counters() // MAIN does everything
    } // end of onCreate(savedInstanceState: Bundle
 
     private fun runT1T2counters() {
@@ -231,7 +244,6 @@ class MainActivity : Activity() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150)
         t1Running = false
         t2Running = false
-      //  t1Counter = -pauseCount
         binding.loop3Button.setBackgroundColor(buttonOffColor)
         binding.loop2Button.setBackgroundColor(buttonOffColor)
         binding.loop1Button.setBackgroundColor(buttonOffColor)
@@ -285,7 +297,7 @@ class MainActivity : Activity() {
         binding.stopButton.setBackgroundColor(buttonOffColor)
      }
 
-    fun onClickStartT2(view: View) {
+    fun onClickStartT2() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Running = false
         t2Running = true
@@ -310,7 +322,7 @@ class MainActivity : Activity() {
         binding.stopButton.setBackgroundColor(buttonOnColor)
     }
 
-    fun onClickClear(view: View) {
+    fun onClickClear() {
         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 100)
         t1Counter = 0
         t2Counter = 0

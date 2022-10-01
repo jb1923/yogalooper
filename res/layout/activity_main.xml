@@ -22,7 +22,7 @@
         android:id="@+id/labelCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/labelPauseCount"
+        android:layout_below="@+id/labelPauseButton"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="10dp"
         android:text="Time:-  "
@@ -87,8 +87,7 @@
         android:layout_above="@+id/startT2Button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:onClick="onClickStop"
-        android:text="stop"
+         android:text="stop"
     />
 
     <Button
@@ -99,7 +98,6 @@
         android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
-        android:onClick="onClickStartT2"
         android:text="start" />
 
     <TextView
@@ -119,7 +117,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:onClick="onClickClear"
-        android:text="clear" />
+         android:text="clear" />
     <!-- END OF relaxation timer display and buttons at bottom of screen -->
 </RelativeLayout>
