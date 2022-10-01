@@ -115,7 +115,7 @@ class MainActivity : Activity() {
         binding.startT2Button.setOnClickListener {
             onClickStartT2()
         }
-        CLEAR BUTTON
+        //CLEAR BUTTON
         binding.clearButton.setOnClickListener {
             onClickClear()
         }
@@ -168,11 +168,7 @@ class MainActivity : Activity() {
         return if (edTxtStr == "") default1 else edTxtStr.toInt()
      }
 
-    fun SetInt(edTxt : EditText, value: Int) { //displays  integer value in EditText
-        edTxt.setText("" + Integer.toString(value) + "") // add spaces for easy selectin
-    }
-
-    fun toggleSetupMenuVisibility( OnOff: Boolean) {
+     fun toggleSetupMenuVisibility( OnOff: Boolean) {
         if (OnOff == true) { // Setup button clicked, so turn on Setup menu stuff
             binding.t1View.visibility = View.INVISIBLE
             binding.loop1Button.visibility = View.INVISIBLE
@@ -220,7 +216,7 @@ class MainActivity : Activity() {
     }
 
     fun changeCount(count: Int){  //  show editText (editCount visible) to modify values
-            SetInt(binding.editCount,count) // SetInt (editText, integer value to set)
+            binding.editCount.setText(Integer.toString(count))
             binding.t1View.visibility = View.INVISIBLE
             binding.editCount.visibility = View.VISIBLE
             binding.labelCount.visibility = View.VISIBLE
