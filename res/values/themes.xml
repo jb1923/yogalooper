@@ -18,6 +18,6 @@
         <item name="android:buttonStyle">@style/ButtonColor</item>
     </style>
     <style name="ButtonColor" parent="@android:style/Widget.Button">
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:textColor">@color/darkBlue</item>
     </style>
 </resources>

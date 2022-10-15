@@ -34,9 +34,9 @@ class MainActivity : Activity() {
 
     // COLORS  go from -1 to - 16777216 white to black
     val colWhite       = Integer.decode("0xFFFFFF") - 16777216 //-0x1
-    val buttonOffColor = Integer.decode("0xAAAAAA") - 16777216
-    val buttonOnColor  = Integer.decode("0xFFFF00") - 16777216 //-0x100
-    val pauseColor     = Integer.decode("0xFF4444") - 16777216// -0x10000
+    val buttonOffColor = Integer.decode("0xBBBB99") - 16777216
+    val buttonOnColor  = Integer.decode("0xFFFFAA") - 16777216 //-0x100
+    val pauseColor     = Integer.decode("0xAAFFAA") - 16777216// -0x10000
 
     val toneGen1 = ToneGenerator(AudioManager.STREAM_SYSTEM, 100)
 
